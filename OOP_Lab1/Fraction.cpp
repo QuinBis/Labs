@@ -1,60 +1,72 @@
+
 #include <iostream>
 
 #include "Fraction.h"
 
-void Fraction::OutputFraction() {
 
-	std::cout << numerator << "/" << denominator << std::endl;
 
+
+// Тип Имя_Класса :: Имя_Функции (список)  ===== Тип - типо возвращаемого значения, Список - список аргументов
+
+void Name_Class::OutputFractionTwo(const Name_Class Number) { // Вывод на экран
+
+	if (Number.NumberOne == 0) {
+		std::cout << "0" << "\n\n";
+	}
+
+	else if (Number.NumberOne == Number.NumberTwo) { std::cout << "1" << "\n\n"; }
+
+	else if (Number.NumberTwo == 0) { std::cout << "Делить на ноль нельзя!" << "\n\n"; }
+
+	else { std::cout << Number.NumberOne << "/" << Number.NumberTwo << "\n\n"; }
 }
 
-Fraction Fraction::SumFraction(Fraction twofraction) { // Сложение двух дробей
 
-	Fraction sum;
+Name_Class Name_Class::SumNumbers(const Name_Class Number) { // Сложение
 
-	sum.numerator = numerator * twofraction.denominator + twofraction.numerator * denominator;
-	sum.denominator = denominator * twofraction.denominator;
+	Name_Class sum;
+
+	sum.NumberOne = (NumberOne * Number.NumberTwo) + (NumberTwo * Number.NumberOne);
+
+	sum.NumberTwo = NumberTwo * Number.NumberTwo;
 
 	return sum;
+}
+
+
+Name_Class Name_Class::DiffNumbers(const Name_Class Number) { // Вычитание
+
+	Name_Class Difference;
+
+	Difference.NumberOne = (NumberOne * Number.NumberTwo) - (NumberTwo*Number.NumberOne);
+	Difference.NumberTwo = NumberTwo * Number.NumberTwo;
+
+	return Difference;
 
 }
 
-Fraction Fraction::DiffFraction(Fraction twofraction) {
+Name_Class Name_Class::MultiplyNumbers(const Name_Class Number) { // Умножение
 
-	Fraction difference;
+	Name_Class Multiply = { 0 , 1 };
 
-	difference.numerator = numerator * twofraction.denominator - twofraction.numerator * denominator;
-	difference.denominator = denominator * twofraction.denominator;
-
-	return difference;
-
-}
-
-Fraction Fraction::MultiplyFraction(Fraction twofraction) {
-
-	Fraction Multiply = {0 , 0};
-
-	if ((denominator * twofraction.denominator) == 0) {
-		
+	if ((NumberTwo * Number.NumberTwo) == 0) {
 		return Multiply;
-		
 	}
 
-	Multiply.numerator = numerator * twofraction.numerator;
-	Multiply.denominator = denominator * twofraction.denominator;
+	Multiply.NumberOne = NumberOne * Number.NumberOne;
+	Multiply.NumberTwo = NumberTwo * Number.NumberTwo;
 	return Multiply;
-
 }
 
-Fraction Fraction::DivisionFraction(Fraction twofraction) {
+Name_Class Name_Class::DivisionNumbers(const Name_Class Number) { // Деление
 
-	Fraction Division = { 0,0 };
+	Name_Class Division = { 0 , 1 };
 
-	if ((denominator * twofraction.numerator) == 0) {
+	if ((NumberOne * Number.NumberTwo) == 0) {
 		return Division;
 	}
-	Division.numerator = numerator * twofraction.denominator;
-	Division.denominator = denominator * twofraction.numerator;
 
+	Division.NumberOne = NumberOne * Number.NumberTwo;
+	Division.NumberTwo = NumberTwo * Number.NumberOne;
 	return Division;
 }

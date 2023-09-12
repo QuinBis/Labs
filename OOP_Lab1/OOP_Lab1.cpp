@@ -1,36 +1,25 @@
 ﻿#include <iostream>
+
+
 #include "Fraction.h"
-
-// Си функции всегда всё копируют
-
-
 
 int main() {
 	setlocale(0, "");
 
-	Fraction fraction = { 1, 2 };
-	Fraction twofraction = { 1, 2 };
+	Name_Class One_Fraction = { 1 , 2 }; // Инициализация первой дроби
+	Name_Class Two_Fraction = { 1, 0 }; // Инициализация второй дроби
 
-	Fraction temp = fraction.SumFraction(twofraction);
+	std::cout << "Выводим сумму..." << std::endl;
+	One_Fraction.OutputFractionTwo(One_Fraction.SumNumbers(Two_Fraction));
 
-	std::cout << "Выведем сумму..." << std::endl;
-	temp.OutputFraction();
+	std::cout << "Выводим разность..." << std::endl;
+	One_Fraction.OutputFractionTwo(One_Fraction.DiffNumbers(Two_Fraction));
 
-	std::cout << "Выведем разницу..." << std::endl;
+	std::cout << "Выводим произведение..." << std::endl;
+	One_Fraction.OutputFractionTwo(One_Fraction.MultiplyNumbers(Two_Fraction));
 
-	temp = fraction.DiffFraction(twofraction);
-	temp.OutputFraction();
-
-	std::cout << "Выведем произведение..." << std::endl;
-
-	temp = fraction.MultiplyFraction(twofraction);
-	temp.OutputFraction();
-
-
-	std::cout << "Выведем частное..." << std::endl;
-
-	temp = fraction.DivisionFraction(twofraction);
-	temp.OutputFraction();
+	std::cout << "Выводим частное..." << std::endl;
+	One_Fraction.OutputFractionTwo(One_Fraction.DivisionNumbers(Two_Fraction));
 
 	return 0;
 }

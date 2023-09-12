@@ -1,24 +1,45 @@
 #pragma once
 
-class Fraction {
+/*
+
+*private - ч/данные и ч/функции доступны только ч/функциям класса
+
+**protected - ч/данные и ч/функции доступны ч/функциям базового и порожденного классов (неизвестно пока)
+
+***public - ч/данные и ч/функции общедоступны
+
+*/
+
+/// Класс по умолчанию - private (по сути мы всё спрятали в капсулу "ИНКАПСУЛЯЦИЯ")
+
+
+class Name_Class {
+
+	// Тело содержит определение данных класса = Член данных (свойства)
+	// И обьявление или определение функций, их обрабатывающих = член функций (методы)
 
 public:
 
+	void OutputFractionTwo(const Name_Class Number);
+
+	Name_Class SumNumbers(const Name_Class Number); // Член функций - Обьявление
+
+	// Член функции имеет привилегированный доступ к член-данным класса, использует их непосредственно
+	// Область их видимости (дейсвтия) - класс = они могут использоваться только с переменными этого класса, через операцию "."
+	// Член данные могут распологаться в любом месте описания класса, они видны всем член функциями
+
+	Name_Class DiffNumbers(const Name_Class Number); // Вычитание
+
+	Name_Class MultiplyNumbers(const Name_Class Number);
+
+	Name_Class DivisionNumbers(const Name_Class Number);
 
 
-	void OutputFraction(); 
 
-	Fraction SumFraction(Fraction twofraction); // Сложение
-	Fraction DiffFraction(Fraction twofraction); // Вычитание
-	Fraction MultiplyFraction(Fraction twofraction); // Умножение
-	Fraction DivisionFraction(Fraction twofraction); // Деление
+	// Далее идут ЧЛЕН ДАННЫЕ , т.е. СВОЙСТВА 
 
+	int NumberOne; // числитель
+	int NumberTwo; // знаменатель
 
 
-
-
-
-	int numerator;  // Член Данных = свойство
-	int denominator;
-	
 };
