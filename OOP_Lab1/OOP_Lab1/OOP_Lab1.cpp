@@ -1,33 +1,33 @@
-#include <iostream>
+п»ї#include <iostream>
 #include "Fraction.h"
 
-// Си функции всегда всё копируют
+// РЎРё С„СѓРЅРєС†РёРё РІСЃРµРіРґР° РІСЃС‘ РєРѕРїРёСЂСѓСЋС‚
 
 
 
 int main() {
 	setlocale(0, "");
 
-	Fraction fraction = { 1, 2 } ;
+	Fraction fraction = { 1, 2 };
 	Fraction twofraction = { 1, 2 };
 
 	Fraction temp = fraction.SumFraction(twofraction);
-	
-	std::cout << "Выведем сумму..." << std::endl;
+
+	std::cout << "Р’С‹РІРµРґРµРј СЃСѓРјРјСѓ..." << std::endl;
 	temp.OutputFraction();
 
-	std::cout << "Выведем разницу..." << std::endl;
+	std::cout << "Р’С‹РІРµРґРµРј СЂР°Р·РЅРёС†Сѓ..." << std::endl;
 
 	temp = fraction.DiffFraction(twofraction);
 	temp.OutputFraction();
 
-	std::cout << "Выведем произведение..." << std::endl;
+	std::cout << "Р’С‹РІРµРґРµРј РїСЂРѕРёР·РІРµРґРµРЅРёРµ..." << std::endl;
 
 	temp = fraction.MultiplyFraction(twofraction);
 	temp.OutputFraction();
 
 
-	std::cout << "Выведем частное..." << std::endl;
+	std::cout << "Р’С‹РІРµРґРµРј С‡Р°СЃС‚РЅРѕРµ..." << std::endl;
 
 	temp = fraction.DivisionFraction(twofraction);
 	temp.OutputFraction();
