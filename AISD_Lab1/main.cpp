@@ -1,5 +1,6 @@
 #include <iostream>
 #include <time.h>
+#include <math.h>
 
 #include "Header.h"
 
@@ -23,8 +24,19 @@ int main() {
 	RundNumMatr(matriс, numberCities, numberCities);
 	OutputMatr(matriс, numberCities, numberCities);
 
+	//int **Road = CreatingMatr(factorial)
+	
+	int kolvociklov = Factorial(numberCities - 1);
 
+	int **Road = CreatingMatr( kolvociklov , numberCities); // 1 аргумент - количество циклов всевозможных, 2 - количество вершин
 
+	for (int i = 0; i < kolvociklov; i++) {
+		Road[i][0] = startCity;
+	}
+
+	for (int i = 0; i < kolvociklov; i++) {
+		for
+	}
 
 
 
