@@ -36,7 +36,7 @@ void InputMatric(int** matric, int cols) { // Ввод значений элементов матрицы (с
 
 		for (int j = 0; j < cols; j++) {
 
-			if (i != j) { // Ввод с клавиатурый стоимости пути из города i в город j.
+			if (i != j) { // Ввод с клавиатуры стоимости пути из города i в город j.
 
 				std::cout << "Укажите стоимость пути из города " << i << " в город " << j << " : ";
 
@@ -77,9 +77,9 @@ void RemovingArray(int* array, int cols) { // Освобождение памяти от динамическо
 
 void OutputArray(int* array, int cols) { // Вывод элементов массива.
 
-	for (int i = 0; i < cols; i++) {
+	for (int* pointer = array; pointer < array + cols; pointer++) {
 
-		std::cout << array[i] << " ";
+		std::cout << *pointer << " ";
 
 	}
 
@@ -97,6 +97,20 @@ void OutputMatric(int** matr, int rows, int cols) { // Вывод матрицы на экран.
 		std::cout << "\n";
 	}
 }
+
+
+
+void CopyArray(int* array_from, int * array_to, int size) { // Копировать значение элементов 
+
+	for (int* pointer_from = array_from,*pointer_to = array_to; pointer_from < array_from + size;) {
+
+		*(pointer_to)++ = *(pointer_from)++;
+
+	}
+
+}
+
+
 
 // Возможна потеря данных? time_t в функции RundNumMatric...
 
@@ -116,6 +130,8 @@ void RundNumMatric(int** matr, int rows) { // Генерация значения элементов матри
 	}
 
 }
+
+
 
 int Factorial(int num) { // Вычисление факториала числа.
 
