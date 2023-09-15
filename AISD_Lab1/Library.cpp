@@ -2,7 +2,9 @@
 #include <iostream>
 #include <time.h>
 
-int** CreatingMatric(int rows, int cols) {
+// Функции написаны исключительно для решения задачи коммивояжёра.
+
+int** CreatingMatric(int rows) { // Выделение памяти под динамическую матрицу (квадратную)
 
 	int **A;
 
@@ -10,17 +12,17 @@ int** CreatingMatric(int rows, int cols) {
 
 	for (int i = 0; i < rows; i++)
 
-		A[i] = new int[cols];
+		A[i] = new int[rows];
 
 	return A;
 
 }
 
-void RemovingMatric(int** matric, int cols) {
+void RemovingMatric(int** matric, int cols) { // Освобождение памяти от динамической матрицы
 
 	for (int i = 0; i < cols;i++) {
 
-		delete[]matric[i];
+		delete[]matric[i]; 
 	
 	}
 	
@@ -28,15 +30,27 @@ void RemovingMatric(int** matric, int cols) {
 
 }
 
-void InputMatric(int** matric, int cols) {
+void InputMatric(int** matric, int cols) { // Ввод значений элементов матрицы (стоимость путей).
 
 	for (int i = 0; i < cols; i++) {
 
 		for (int j = 0; j < cols; j++) {
 
-			std::cout << "Укажите стоимость пути из города " << i << " в город " << j << " : ";
+			if (i != j) { // Ввод с клавиатурый стоимости пути из города i в город j.
 
-			std::cin >> matric[i][j];
+				std::cout << "Укажите стоимость пути из города " << i << " в город " << j << " : ";
+
+				std::cin >> matric[i][j];
+
+			}
+
+			else { // Из одного города в этот же вернуться нельзя.
+
+				matric[i][j] = 0;
+
+				std::cout << "Стоимость пути из города " << i << " в город " << j << " равна 0" << std::endl;
+			
+			}
 
 		}
 
@@ -45,7 +59,34 @@ void InputMatric(int** matric, int cols) {
 	
 }
 
-void OutputMatric(int** matr, int rows, int cols) {
+int* CreatingArray(int cols) { // Выделение памяти под динамический массив.
+
+	int* A;
+
+	A = new int[cols];
+
+	return A;
+
+}
+
+void RemovingArray(int* array, int cols) { // Освобождение памяти от динамического массива.
+
+	delete[]array;
+
+}
+
+void OutputArray(int* array, int cols) { // Вывод элементов массива.
+
+	for (int i = 0; i < cols; i++) {
+
+		std::cout << array[i] << " ";
+
+	}
+
+
+}
+
+void OutputMatric(int** matr, int rows, int cols) { // Вывод матрицы на экран.
 
 	for (int i = 0; i < rows; i++) {
 
@@ -57,13 +98,15 @@ void OutputMatric(int** matr, int rows, int cols) {
 	}
 }
 
-void RundNumMatric(int** matr, int rows, int cols) {
+// Возможна потеря данных? time_t в функции RundNumMatric...
+
+void RundNumMatric(int** matr, int rows) { // Генерация значения элементов матрицы от 1-100.
 
 	srand(time(0));
 
 	for (int i = 0; i < rows; i++) {
 
-		for (int j = 0; j < cols; j++) {
+		for (int j = 0; j < rows; j++) {
 
 			if (i != j) matr[i][j] = rand() % (100) + 1;
 
@@ -74,13 +117,14 @@ void RundNumMatric(int** matr, int rows, int cols) {
 
 }
 
-int Factorial(int num) {
+int Factorial(int num) { // Вычисление факториала числа.
 
 	if (num == 0) 
 
 		return 1;
 
 	else { 
+
 		return num * Factorial(num - 1); 
 
 	}
