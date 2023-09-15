@@ -8,42 +8,33 @@
 // Решение задачи основано на алгоритме Дейкстры.
 
 int main() {
+
 	setlocale(0, "Russian"); // Для вывода русских символов в консоль.
 
 	/*========================Инициализация переменных========================*/
-
+	
 	int numberCities, startCity;
 
-	std::cout << "Укажите количество городов : "; std::cin >> numberCities;
-	//std::cout << "Введите начальный город : "; std::cin >> startCity;
+	std::cout << "Введите количество городов : "; std::cin >> numberCities;
+	std::cout << "Укажите начальный город : "; std::cin >> startCity;
 
+	int **MatricWays = CreatingMatric(numberCities, numberCities);
 
-	// Создание и выделение памяти под динамическую матрицу.
-	int **matriс = CreatingMatr(numberCities, numberCities);
+	RundNumMatric(MatricWays, numberCities, numberCities);
 
-	RundNumMatr(matriс, numberCities, numberCities);
-	OutputMatr(matriс, numberCities, numberCities);
+	OutputMatric(MatricWays, numberCities, numberCities);
 
-	//int **Road = CreatingMatr(factorial)
 	
-	int kolvociklov = Factorial(numberCities - 1);
 
-	int **Road = CreatingMatr( kolvociklov , numberCities); // 1 аргумент - количество циклов всевозможных, 2 - количество вершин
 
-	for (int i = 0; i < kolvociklov; i++) {
-		Road[i][0] = startCity;
-	}
 
-	for (int i = 0; i < kolvociklov; i++) {
-		for
-	}
 
 
 
 
 	// Освобождение памяти от динамической матрицы.
-	RemovingMatr(matriс, numberCities);
-
+	RemovingMatric(MatricWays, numberCities);
+	
 
 	return 0;
 }
