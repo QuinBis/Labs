@@ -104,12 +104,9 @@ void OutputMatric(int** matr, int rows, int cols) { // Вывод матрицы на экран.
 
 void CopyArray(int* array_from, int * array_to, int size) { // Копировать значение элементов
 
-	for (int* pointer_from = array_from, *pointer_to = array_to; pointer_from < array_from + size;) {
-
-		*(pointer_to)++ = *(pointer_from)++;
-
+	for (int i = 0; i < size; i++) {
+		array_to[i] = array_from[i];
 	}
-
 }
 
 
@@ -118,7 +115,7 @@ void CopyArray(int* array_from, int * array_to, int size) { // Копировать значен
 
 void RundNumMatric(int** matr, int rows) { // Генерация значения элементов матрицы от 1-100.
 
-	srand(time(0));
+	srand( (unsigned int ) time(0));
 
 	for (int i = 0; i < rows; i++) {
 
@@ -146,5 +143,26 @@ int Factorial(int num) { // Вычисление факториала числа.
 		return num * Factorial(num - 1);
 
 	}
+
+}
+
+void SwapElementInArray(int &FirstElement, int &SecondElement) { 
+	int temp = FirstElement;
+	FirstElement = SecondElement;
+	SecondElement = temp;
+
+}
+
+int CostOfTheWay(int*array, int**matric, int size) {
+
+	int cost = 0, next_index = 0;
+
+	for (int i = 0; i < size; i++) {
+		next_index = i + 1;
+		cost += matric[array[i] - 1][array[next_index] - 1];
+
+	}
+
+	return cost;
 
 }
