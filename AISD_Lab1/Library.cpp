@@ -100,7 +100,7 @@ void OutputMatric(int** matr, int rows, int cols) { // Вывод матрицы на экран.
 
 
 
-void CopyArray(int* array_from, int * array_to, int size) { // Копировать значение элементов 
+void CopyArray(int* array_from, int * array_to, int size) { // Копировать значение элементов
 
 	for (int* pointer_from = array_from,*pointer_to = array_to; pointer_from < array_from + size;) {
 

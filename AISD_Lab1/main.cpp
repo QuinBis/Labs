@@ -65,14 +65,11 @@ int main() {
 	std::cout << "\nСтоимость этого маршрута : " << waylength << std::endl;
 
 	minlength = waylength; // Сразу берем первый маршрут за минимальный, в последующем будем сравнивать.
-
+	OutputArray(Ways, numberCities + 1);
 
 	// Реализация алгоритма Дейкстры.
 
-	OutputArray(Ways, numberCities + 1);
-	CopyArray(Ways, minimumWay, numberCities + 1);
-	OutputArray(minimumWay, numberCities + 1);
-
+	
 
 
 
