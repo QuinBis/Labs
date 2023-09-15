@@ -11,3 +11,4 @@ void InputMatric(int ** matric, int cols); // Ввод матрицы с клавиатуры
 void RemovingArray(int* array, int cols); // Освобождение памяти от динамического массива
 int* CreatingArray(int cols); // Создание динамического массива
 int Factorial(int num); // Вычисление факториала от числа num
+

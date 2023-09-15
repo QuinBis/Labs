@@ -1,6 +1,8 @@
-#include "Header.h"
+
 #include <iostream>
 #include <time.h>
+
+#include "Header.h"
 
 // Функции написаны исключительно для решения задачи коммивояжёра.
 
@@ -22,10 +24,10 @@ void RemovingMatric(int** matric, int cols) { // Освобождение памяти от динамиче
 
 	for (int i = 0; i < cols;i++) {
 
-		delete[]matric[i]; 
-	
+		delete[]matric[i];
+
 	}
-	
+
 	delete[]matric;
 
 }
@@ -49,14 +51,14 @@ void InputMatric(int** matric, int cols) { // Ввод значений элементов матрицы (с
 				matric[i][j] = 0;
 
 				std::cout << "Стоимость пути из города " << i << " в город " << j << " равна 0" << std::endl;
-			
+
 			}
 
 		}
 
 	}
 
-	
+
 }
 
 int* CreatingArray(int cols) { // Выделение памяти под динамический массив.
@@ -102,7 +104,7 @@ void OutputMatric(int** matr, int rows, int cols) { // Вывод матрицы на экран.
 
 void CopyArray(int* array_from, int * array_to, int size) { // Копировать значение элементов
 
-	for (int* pointer_from = array_from,*pointer_to = array_to; pointer_from < array_from + size;) {
+	for (int* pointer_from = array_from, *pointer_to = array_to; pointer_from < array_from + size;) {
 
 		*(pointer_to)++ = *(pointer_from)++;
 
@@ -135,13 +137,13 @@ void RundNumMatric(int** matr, int rows) { // Генерация значения элементов матри
 
 int Factorial(int num) { // Вычисление факториала числа.
 
-	if (num == 0) 
+	if (num == 0)
 
 		return 1;
 
-	else { 
+	else {
 
-		return num * Factorial(num - 1); 
+		return num * Factorial(num - 1);
 
 	}
 
