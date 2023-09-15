@@ -20,7 +20,7 @@ int main() {
 
 	int **MatricWays = CreatingMatric(numberCities, numberCities);
 
-	RundNumMatric(MatricWays, numberCities, numberCities);
+	InputMatric(MatricWays, numberCities);
 
 	OutputMatric(MatricWays, numberCities, numberCities);
 

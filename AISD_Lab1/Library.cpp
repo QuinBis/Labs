@@ -34,6 +34,8 @@ void InputMatric(int** matric, int cols) {
 
 		for (int j = 0; j < cols; j++) {
 
+			std::cout << "”кажите стоимость пути из города " << i << " в город " << j << " : ";
+
 			std::cin >> matric[i][j];
 
 		}
