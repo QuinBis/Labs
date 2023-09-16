@@ -21,5 +21,32 @@ int main() {
 	inputMatrix(matrixWays, quantityCities);
 	outputMatrix(matrixWays, quantityCities);
 
+	int currentCost,
+		minimumCost,
+		column,
+		currentWay = startCity;
+
+	while (...) {
+
+		minimumCost = 101;
+		column = 0;
+
+		// 
+
+		for (int i = 0; i < quantityCities; i++) {
+
+			if (i != currentWay) {
+
+				currentCost = matrixWays[currentWay][i];
+
+				if (currentCost < minimumCost) {
+
+					minimumCost = currentCost;
+					column = i;
+				}
+			}
+		}
+	}
+
 	return 0;
 }
