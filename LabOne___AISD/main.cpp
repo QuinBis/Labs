@@ -1,122 +1,125 @@
 #include <iostream>
 #include <time.h>
-#include <math.h>
+#include <chrono>
 
 #include "Header.h"
 
-// Число всевозможных гамильтоновых циклов без повторений = (n-1)! (как только набираем такое количество - завершаем цикл)
-// Решение задачи основано на алгоритме Дейкстры.
+int main() {
 
+	int quantityCities, startCity, currentLength;
 
-int main(int) {
+	std::cout << "Enter the quantity of cities : ";
+	std::cin >> quantityCities;
+	std::cout << "Enter the starting city : ";
+	std::cin >> startCity;
 
-	/*========================Инициализация переменных========================*/
+	if ( startCity >= quantityCities || startCity <= 0) {
 
-	int numberCities, startCity, waylength = 0, minlength = 0;
+		completionProgramm();
 
-	std::cout << "Enter the number of cities : "; std::cin >> numberCities;
-	std::cout << "Enter the starting city : "; std::cin >> startCity; std::cout << "\n";
-
-	int **MatricWays = CreatingMatric(numberCities);
-	//InputMatric(MatricWays, numberCities);
-	RundNumMatric(MatricWays, numberCities);
-	OutputMatric(MatricWays, numberCities, numberCities);
-
-	// Массив Ways для генерации путей, его размер должен быть numberCities+1 (Поскольку строится цепочка 1-2-3-1).
-	// Массив minimumWay для записи маршрута с минимальной стоимостью.
-	int *Ways = CreatingArray(numberCities + 1), *minimumWay = CreatingArray(numberCities + 1);
-
-
-
-
-	/* ===================== Генерация первого пути и вычисление стоимости маршрута ========================= */
-
-	for (int i = 0, countCities = 1, previndex = 0; i < numberCities;) {
-		if (i == 0) { // Меняем значение 1 и последних элементов на значение начального города.
-			Ways[i] = startCity;
-			Ways[numberCities] = startCity;
-			minimumWay[numberCities] = startCity;
-			minimumWay[i] = startCity;
-			i++;
-		}
-
-		else if (countCities == startCity) { countCities++; } // Если текущий город = начальному, увеличить текущий город на 1.
-
-		else { // Во всех иных случаях, просто выставляем города, ошибок не будет.
-			Ways[i] = countCities;
-			countCities++;
-			i++;
-		}
 	}
 
-	std::cout << "\nThe first way looks like this : ";
-	OutputArray(Ways, numberCities + 1);
-	waylength = CostOfTheWay(Ways, MatricWays, numberCities);
-	std::cout << "\nThe cost of the way : : " << waylength << std::endl;
+	auto begin = std::chrono::steady_clock::now();
 
-	minlength = waylength; // Сразу берем стоимость первого маршрута за минимальную, в последующем будем сравнивать.
-	CopyArray(Ways, minimumWay, numberCities); // Запоминаем и сам маршрут.
+	int** matrixWays = createMatrix(quantityCities);
+	inputMatrix(matrixWays, quantityCities);
+	outputMatrix(matrixWays, quantityCities, quantityCities);
 
-	// Реализация алгоритма Дейкстры.
+	int* currentWay = createArray(quantityCities + 1),
+	   * minimumWay = createArray(quantityCities + 1);
 
-	int numberofcycles = Factorial(numberCities-1); // Будем выполнять цикл (n-1)! раз, больше не имеет смысла. (n-1)! - количество всевозможных ПРАВИЛЬНЫХ циклов.
+	for (int i = 0, k = 1; i < quantityCities; ) {
+
+		if (i == 0) {
+			currentWay[i] = startCity;
+			currentWay[quantityCities] = startCity;
+
+			i++;
+		}
+
+		else if (k == startCity) {
+			k++;
+		}
+
+		else {
+			currentWay[i] = k;
+			k++;
+			i++;
+		}
+
+	}
 
 	int countCycles = 1;
 
-	while (countCycles != numberofcycles) {
-		/* ============= Начанием построение нового маршрута ============ */
-		for (int i = numberCities-2; i >= 1; i--) {
-			int next_index = i + 1;
-			// Ищем первый элемент , начинаю со второго по счету города, этот город должен быть младше следующего.
-			if ( (i < numberCities-1) && (Ways[i] < Ways[next_index]) ) { 
-				// Как только нашли такой город, начинаем искать второй.
-				for (int j = numberCities - 1; j > i;j--) {
-					// Следующий город ищем с конца, этот город должен быть старше по значению чем первый.
-					if ( ( j <= numberCities-1) && ( Ways[i] < Ways[j] )) {
+	std::cout << "\nPossible ways for this solution : \n";
+	outputArray(currentWay, quantityCities + 1);
 
-						// Теперь меняем местами города
-						// И считаем сумму нового маршурат, в случае если этот маршрут оказался дешевле, запоминаем его.
-						
-						SwapElementInArray(Ways[i], Ways[j]);
-						for (int invert_i = i + 1, invert_j = numberCities - 1; invert_i <= invert_j;invert_i++,invert_j--) {
-								SwapElementInArray(Ways[invert_i], Ways[invert_j]);
-							}
+	currentLength = computeCostWay(currentWay, matrixWays, quantityCities);
 
-						waylength = CostOfTheWay(Ways, MatricWays, numberCities);
 
-						if (minlength > waylength) {
-							minlength = waylength;
-							CopyArray(Ways, minimumWay, numberCities);
+	copyArray(currentWay, minimumWay, quantityCities + 1);
+
+
+	// The number of correct cycles = (n-1)!.
+	int numberofCycles = computeFactorial(quantityCities - 1), nextIndex,
+		minimumLength = currentLength;
+
+
+
+	while (countCycles != numberofCycles) {
+
+		for (int i = quantityCities - 2; i >= 1; i--) {
+
+			nextIndex = i + 1;
+
+			if ( (i < quantityCities - 1) && (currentWay[i] < currentWay[nextIndex]) ) { 
+
+				for (int j = quantityCities - 1; j > i; j--) {
+
+					if ( (j <= quantityCities - 1) && (currentWay[i] < currentWay[j]) ) {
+
+						swapValues(currentWay[i], currentWay[j]);
+
+						for (int k = i + 1, l = quantityCities - 1; k <= l; k++, l--) {
+								swapValues(currentWay[k], currentWay[l]);
 						}
 
-						std::cout << "\nCompleted permutation : ";
-						OutputArray(Ways, numberCities+1);
-						std::cout << "\nThe cost of the way : " << waylength << std::endl;
-						i = numberCities - 1;
-						countCycles++; // Показываем что мы сделали 1 перестановку
-						std::cout << "There are permutations left : " << countCycles << std::endl;
+
+						currentLength = computeCostWay(currentWay, matrixWays, quantityCities);
+
+
+						if (minimumLength > currentLength) {
+
+							copyArray(currentWay, minimumWay, quantityCities + 1);
+
+							minimumLength = currentLength;
+
+						}
+
+
+						outputArray(currentWay, quantityCities + 1);
+						countCycles++;
+
+						// We returned the index to the end so as not to miss the solution.
+						i = quantityCities - 1;
 					}
 				}
 			}
-
-
-
-			
 		}
 	}
 	
+	auto end = std::chrono::steady_clock::now();
+	auto elapsed_ms = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin);
+
+	std::cout << "\nThe minimum cost way is : "; outputArray(minimumWay, quantityCities + 1);
+	std::cout << "The cost of this path : " << minimumLength << std::endl;
+	std::cout << "The time: " << elapsed_ms.count() << " ms\n";
 
 
-	std::cout << "\nThe minimum cost way is : "; OutputArray(minimumWay, numberCities+1);
-	std::cout << "\nIts cost will be as follows : " << minlength << std::endl;
-
-
-
-	// Освобождение памяти от динамической матрицы.
-	RemovingArray(Ways, numberCities + 1);
-	RemovingArray(minimumWay, numberCities + 1);
-	RemovingMatric(MatricWays, numberCities);
-
+	// Freeing up memory from arrays and matrix.
+	destroyArray(currentWay, quantityCities + 1);
+	destroyArray(minimumWay, quantityCities + 1);
+	destroyMatrix(matrixWays, quantityCities);
 
 	return 0;
 }

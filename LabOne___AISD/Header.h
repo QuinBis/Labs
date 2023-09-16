@@ -1,16 +1,23 @@
 #pragma once
 
 
-int** CreatingMatric(int rows); // Создание динамической матрицы
-void RemovingMatric(int** matric, int cols); // Освобождение памяти от матрицы.
-void OutputMatric(int** matr, int rows, int cols); // Вывод элементов матрицы.
-void OutputArray(int* array, int cols); // Вывод элементов массива.
-void CopyArray(int* array_from, int * array_to, int size); // Копировать значения из массива A в массив B
-void RundNumMatric(int** matr, int rows); // Генерация матрицы с различными значениями её элементов
-void InputMatric(int ** matric, int cols); // Ввод матрицы с клавиатуры
-void RemovingArray(int* array, int cols); // Освобождение памяти от динамического массива
-int* CreatingArray(int cols); // Создание динамического массива
-int Factorial(int num); // Вычисление факториала от числа num
-void SwapElementInArray(int &FirstElement, int &SecondElement); // Свап местами элементов массива по индексу.
-int CostOfTheWay(int* array, int** matric, int cols); // Нахождение стоимости маршрута
+int** createMatrix(int rows);
+void destroyMatrix(int** matrix, int cols);
+void outputMatrix(int** matr, int rows, int cols);
+void generateRandomMatrix(int** matr, int rows);
+void inputMatrix(int ** matrix, int cols);
+
+void outputArray(int* array, int cols);
+void copyArray(int* arrayFrom, int* arrayTo, int size);
+void destroyArray(int* array, int cols);
+int* createArray(int cols);
+
+
+
+int computeCostWay(int* array, int** matrix, int cols);
+int computeFactorial(int num);
+
+void swapValues(int& firstValue, int& secondValue);
+
+void completionProgramm();
 

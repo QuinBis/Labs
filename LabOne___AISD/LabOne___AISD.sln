@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.2092
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LabOne___AISD", "LabOne___AISD\LabOne___AISD.vcxproj", "{9A13E540-7B53-4255-8F19-C2A93E433DD8}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LabOne___AISD", "LabOne___AISD.vcxproj", "{9A13E540-7B53-4255-8F19-C2A93E433DD8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,6 +26,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {1FAE3C30-4D6B-4AB3-80F4-F79272FC2736}
+		SolutionGuid = {3EE7FEA4-6B6B-4432-9624-81E939736ED6}
 	EndGlobalSection
 EndGlobal
