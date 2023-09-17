@@ -22,4 +22,5 @@ void swapValues(int& firstValue, int& secondValue);
 void completionProgramm();
 
 void exactAlgorithm(int quantityCities, int startCity);
+void heuristicAlgorithm(int quantityCities, int startCity);
 

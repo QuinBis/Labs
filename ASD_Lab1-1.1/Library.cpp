@@ -247,3 +247,85 @@ void exactAlgorithm(int quantityCities, int startCity)
 	destroyMatrix(matrixWays, quantityCities);
 
 }
+
+
+void heuristicAlgorithm(int quantityCities, int startCity) {
+
+	int currentCity = startCity - 1, currentCost = 0, minimumCost;
+
+
+	int** matrixCost = createMatrix(quantityCities);
+	inputMatrix(matrixCost, quantityCities);
+	outputMatrix(matrixCost, quantityCities);
+
+
+	clock_t start = clock();
+
+
+	// The first and last index is the initial one
+	int* currentWay = createArray(quantityCities + 1);
+	currentWay[0] = currentWay[quantityCities] = startCity;
+
+
+
+	// We remember the index of the city to which we will go.
+	int	minArc;
+
+	for (int i = 1; i < quantityCities + 1; i++) {
+
+		minimumCost = 0;
+
+		for (int j = 0; j < quantityCities; j++) {
+
+			if (j != currentCity) { // 2 != 0
+
+
+				// This check is done to avoid a new variable
+				if (minimumCost == 0) {
+					minimumCost = matrixCost[currentCity][j];
+					minArc = j;
+				}
+
+
+
+				else {
+
+					currentCost = matrixCost[currentCity][j];
+
+					if ((currentCost < minimumCost) && (currentCost != 0)) {
+
+						minimumCost = currentCost;
+						minArc = j;
+
+					}
+				}
+
+
+			}
+
+		}
+
+		// We remove the opportunity to return back.
+		matrixCost[minArc][currentCity] = 0;
+
+		currentCity = minArc;
+		currentWay[i] = currentCity + 1;
+
+	}
+
+
+	clock_t end = clock();
+
+
+	double seconds = (double)(end - start) / CLOCKS_PER_SEC;
+
+	int lengthWay = computeCostWay(currentWay, matrixCost, quantityCities);
+
+	std::cout << "\nThe minimum cost way is : "; outputArray(currentWay, quantityCities + 1);
+	std::cout << "The cost of this way : " << lengthWay << std::endl;
+	std::cout << "The time - " << seconds << "s" << std::endl;
+
+
+	destroyMatrix(matrixCost, quantityCities);
+	destroyArray(currentWay, quantityCities + 1);
+}
