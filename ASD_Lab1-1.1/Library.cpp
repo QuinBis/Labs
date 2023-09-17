@@ -28,14 +28,14 @@ void destroyMatrix(int** matrix, int cols)
 	delete[]matrix;
 }
 
-void outputMatrix(int** matrix, int rows, int cols)
+void outputMatrix(int** matrix, int rows)
 {
 
 	std::cout << "\nThe matrix of the cost of ways : " << std::endl;
 
 	for (int i = 0; i < rows; i++) {
 
-		for (int j = 0; j < cols; j++) {
+		for (int j = 0; j < rows; j++) {
 			std::cout << matrix[i][j] << " ";
 		}
 
@@ -145,14 +145,15 @@ void completionProgramm()
 	exit(0);
 }
 
-void exactAlgorithm(int quantityCities, int startCity) {
+void exactAlgorithm(int quantityCities, int startCity)
+{
 
 	auto begin = std::chrono::steady_clock::now();
 
 	int** matrixWays = createMatrix(quantityCities);
 	//inputMatrix(matrixWays, quantityCities);
 	generateRandomMatrix(matrixWays, quantityCities);
-	outputMatrix(matrixWays, quantityCities, quantityCities);
+	outputMatrix(matrixWays, quantityCities);
 
 	int* currentWay = createArray(quantityCities + 1),
 	   * minimumWay = createArray(quantityCities + 1);
@@ -195,7 +196,7 @@ void exactAlgorithm(int quantityCities, int startCity) {
 
 
 
-	for (int i = quantityCities - 2; i >= 1; i--) {
+	for (int i = quantityCities - 2; i >= 1; i--){
 
 		nextIndex = i + 1;
 
