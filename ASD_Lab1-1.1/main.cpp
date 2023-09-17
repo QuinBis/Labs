@@ -10,40 +10,69 @@ void heuristicAlgorithm(int quantityCities, int startCity) {
 	
 	auto begin = std::chrono::steady_clock::now();
 
+
 	int** matrixCost = createMatrix(quantityCities);
 	generateRandomMatrix(matrixCost, quantityCities);
 	//inputMatrix(matrixCost, quantityCities);
 	outputMatrix(matrixCost, quantityCities);
 
-	int* mainWay = createArray(quantityCities + 1);
+	// The first and last index is the initial one
+	int* currentWay = createArray(quantityCities + 1);
+	currentWay[0] = currentWay[quantityCities] = startCity;
+	//outputArray(currentWay, quantityCities + 1);
 
-	// Начало реализации эвристического решения
-	
+	int currentCity = startCity - 1,
+		minimumCost = 0,
+		currentCost = 0,
+		minArc;
 
-	int currentCost = 0,
-		minimumCost = 101,
-		minimumWay,
+	for (int i = 1; i < quantityCities + 1; i++) {
 
-	// Поскольку индексация идет с 0.
-		currentCity = startCity - 1;
+		minimumCost = 0;
 
-	for (int i = 0; i < quantityCities; i++) {
+		outputArray(currentWay, quantityCities + 1);
 
-		if (i != currentCity) { // Чтобы избежать попадания из одного города в тот же.
 
-			currentCost = matrixCost[currentCity][i];
+		for (int j = 0; j < quantityCities; j++) {
 
-			if (currentCost < minimumCost) {
-				
-				minimumCost = currentCost;
+			if (j != currentCity) { // 2 != 0
+
+
+				// This check is done to avoid a new variable
+				if (minimumCost == 0) {
+					minimumCost = matrixCost[currentCity][j];
+					minArc = j;
+				}
+
+
+
+				else {
+
+					currentCost = matrixCost[currentCity][j];
+
+					if ( (currentCost < minimumCost) && (currentCost != 0) ) { 
+
+						minimumCost = currentCost; 
+						minArc = j;
+
+					}
+				}
 
 
 			}
+
 		}
+
+		matrixCost[minArc][currentCity] = 0;
+		currentCity = minArc;
+		currentWay[i] = currentCity + 1;
+
 	}
 
+	outputMatrix(matrixCost, quantityCities);
 
 	destroyMatrix(matrixCost, quantityCities);
+	destroyArray(currentWay, quantityCities + 1);
 }
 
 int main() {
@@ -61,7 +90,8 @@ int main() {
 
 	}
 
-	exactAlgorithm(quantityCities, startCity);
+	//exactAlgorithm(quantityCities, startCity);
+	heuristicAlgorithm(quantityCities, startCity);
 
 	return 0;
 }

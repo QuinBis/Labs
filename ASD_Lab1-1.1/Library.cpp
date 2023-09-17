@@ -148,7 +148,7 @@ void completionProgramm()
 void exactAlgorithm(int quantityCities, int startCity)
 {
 
-	auto begin = std::chrono::steady_clock::now();
+	clock_t start = clock();
 
 	int** matrixWays = createMatrix(quantityCities);
 	//inputMatrix(matrixWays, quantityCities);
@@ -189,8 +189,6 @@ void exactAlgorithm(int quantityCities, int startCity)
 
 	copyArray(currentWay, minimumWay, quantityCities + 1);
 
-
-	// The number of correct cycles = (n-1)!.
 	int nextIndex,
 		minimumLength = currentLength;
 
@@ -225,7 +223,7 @@ void exactAlgorithm(int quantityCities, int startCity)
 					}
 
 
-					outputArray(currentWay, quantityCities + 1);
+					//outputArray(currentWay, quantityCities + 1);
 					countCycles++;
 
 					// We returned the index to the end so as not to miss the solution.
@@ -235,12 +233,12 @@ void exactAlgorithm(int quantityCities, int startCity)
 		}
 	}
 
-	auto end = std::chrono::steady_clock::now();
-	auto elapsed_ms = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin);
+	clock_t end = clock();
+	double seconds = (double)(end - start) / CLOCKS_PER_SEC;
 
 	std::cout << "\nThe minimum cost way is : "; outputArray(minimumWay, quantityCities + 1);
-	std::cout << "The cost of this path : " << minimumLength << std::endl;
-	std::cout << "The time: " << elapsed_ms.count() << " ms\n";
+	std::cout << "The cost of this way : " << minimumLength << std::endl;
+	std::cout << "The time - " << seconds << "s" << std::endl;
 
 
 	// Freeing up memory from arrays and matrix.
