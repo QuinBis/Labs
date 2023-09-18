@@ -6,6 +6,7 @@ void destroyMatrix(int** matrix, int cols);
 void outputMatrix(int** matr, int rows);
 void generateRandomMatrix(int** matr, int rows);
 void inputMatrix(int ** matrix, int cols);
+int indexMinNumberInRow(int** matrix, int quantityCities, int row);
 
 
 int* createArray(int cols);

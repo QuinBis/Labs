@@ -71,14 +71,14 @@ void inputMatrix(int** matrix, int cols)
 
 void generateRandomMatrix(int** matrix, int rows)
 {
-	srand((unsigned int)time(0));
+	//srand((unsigned int)time(0));
 
 	for (int i = 0; i < rows; i++) {
 
 		for (int j = 0; j < rows; j++) {
 
 			if (i != j) {
-				matrix[i][j] = rand() % (100) + 1;
+				matrix[i][j] = rand() % (100) + 1; // (1000) + 1 || (10 000) + 1 || (100 000) + 1
 			}
 
 			else {
@@ -145,6 +145,23 @@ void completionProgramm()
 	exit(0);
 }
 
+int indexMinNumberInRow(int** matrix, int quantityCities, int row)
+{
+	int min = INT_MAX, column = 0;
+
+	for (int i = 0; i < quantityCities; i++) {
+
+		if ((matrix[row][i] < min) && (matrix[row][i] != 0)) {
+			min = matrix[row][i];
+			column = i;
+		}
+
+
+	}
+
+	return column;
+}
+
 void exactAlgorithm(int quantityCities, int startCity)
 {
 
@@ -156,7 +173,7 @@ void exactAlgorithm(int quantityCities, int startCity)
 	outputMatrix(matrixWays, quantityCities);
 
 	int* currentWay = createArray(quantityCities + 1),
-	   * minimumWay = createArray(quantityCities + 1);
+		*minimumWay = createArray(quantityCities + 1);
 
 	for (int i = 0, k = 1; i < quantityCities; ) {
 
@@ -194,7 +211,7 @@ void exactAlgorithm(int quantityCities, int startCity)
 
 
 
-	for (int i = quantityCities - 2; i >= 1; i--){
+	for (int i = quantityCities - 2; i >= 1; i--) {
 
 		nextIndex = i + 1;
 
@@ -251,11 +268,12 @@ void exactAlgorithm(int quantityCities, int startCity)
 
 void heuristicAlgorithm(int quantityCities, int startCity) {
 
-	int currentCity = startCity - 1, currentCost = 0, minimumCost;
+	int currentCity = startCity - 1, currentCost = 0;
 
 
 	int** matrixCost = createMatrix(quantityCities);
-	inputMatrix(matrixCost, quantityCities);
+	//inputMatrix(matrixCost, quantityCities);
+	generateRandomMatrix(matrixCost, quantityCities);
 	outputMatrix(matrixCost, quantityCities);
 
 
@@ -267,62 +285,49 @@ void heuristicAlgorithm(int quantityCities, int startCity) {
 	currentWay[0] = currentWay[quantityCities] = startCity;
 
 
-
-	// We remember the index of the city to which we will go.
-	int	minArc;
-
-	for (int i = 1; i < quantityCities + 1; i++) {
-
-		minimumCost = 0;
-
-		for (int j = 0; j < quantityCities; j++) {
-
-			if (j != currentCity) { // 2 != 0
+	int currentLength = 0, indexMinNum;
 
 
-				// This check is done to avoid a new variable
-				if (minimumCost == 0) {
-					minimumCost = matrixCost[currentCity][j];
-					minArc = j;
-				}
+	for (int i = 1; i < quantityCities;) {
+		
+		// Looking for the best column index.
+		indexMinNum = indexMinNumberInRow(matrixCost, quantityCities, currentCity);
 
 
+		if (indexMinNum != startCity - 1) {
 
-				else {
-
-					currentCost = matrixCost[currentCity][j];
-
-					if ((currentCost < minimumCost) && (currentCost != 0)) {
-
-						minimumCost = currentCost;
-						minArc = j;
-
-					}
-				}
+			currentWay[i] = indexMinNum + 1;
+			currentLength += matrixCost[currentCity][indexMinNum];
 
 
-			}
+			// So as not to return to the last city.
+			for (int j = 0; j < quantityCities; j++)
+				matrixCost[j][indexMinNum] = 0;
+			matrixCost[indexMinNum][currentCity] = 0;
 
+
+			currentCity = indexMinNum;
+
+			i++;
 		}
 
-		// We remove the opportunity to return back.
-		matrixCost[minArc][currentCity] = 0;
-
-		currentCity = minArc;
-		currentWay[i] = currentCity + 1;
-
+		// If the minimum way to the city you have already been to.
+		else {
+			matrixCost[currentCity][indexMinNum] = 0;
+		}
 	}
 
-
+	// Length from last to initial.
+	currentLength += matrixCost[currentWay[quantityCities - 1] - 1][startCity - 1];
+	
+	
 	clock_t end = clock();
 
 
 	double seconds = (double)(end - start) / CLOCKS_PER_SEC;
 
-	int lengthWay = computeCostWay(currentWay, matrixCost, quantityCities);
-
 	std::cout << "\nThe minimum cost way is : "; outputArray(currentWay, quantityCities + 1);
-	std::cout << "The cost of this way : " << lengthWay << std::endl;
+	std::cout << "The cost of this way : " << currentLength << std::endl;
 	std::cout << "The time - " << seconds << "s" << std::endl;
 
 

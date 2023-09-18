@@ -13,12 +13,12 @@ int main() {
 	std::cout << "Enter the starting city : ";
 	std::cin >> startCity;
 
-	if ( startCity > quantityCities || startCity <= 0) {
+	if (startCity > quantityCities || startCity <= 0) {
 
 		completionProgramm();
 
 	}
-;
+
 	heuristicAlgorithm(quantityCities, startCity);
 
 	return 0;
