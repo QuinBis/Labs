@@ -20,8 +20,5 @@ int computeCostWay(int* array, int** matrix, int cols);
 
 void swapValues(int& firstValue, int& secondValue);
 
-void completionProgramm();
-
 void exactAlgorithm(int quantityCities, int startCity);
 void heuristicAlgorithm(int quantityCities, int startCity);
-

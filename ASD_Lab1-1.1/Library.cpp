@@ -55,10 +55,10 @@ void inputMatrix(int** matrix, int cols)
 				std::cout << "Specify the cost of the way from city " << i << " to city " << j << " : ";
 				std::cin >> matrix[i][j];
 
-				if (matrix[i][j] == 0) {
+				while (matrix[i][j] == 0) {
 
-					completionProgramm();
-
+					std::cout << "please enter a number other than zero : ";
+					std::cin >> matrix[i][j];
 				}
 			}
 
@@ -88,7 +88,7 @@ void generateRandomMatrix(int** matrix, int rows)
 	}
 }
 
-int* createArray(int cols){
+int* createArray(int cols) {
 
 	int* A;
 
@@ -105,7 +105,7 @@ void destroyArray(int* array, int cols)
 void outputArray(int* array, int cols)
 {
 
-	for (int i = 0; i < cols ; i++) {
+	for (int i = 0; i < cols; i++) {
 		std::cout << array[i] << " ";
 	}
 
@@ -121,7 +121,7 @@ void copyArray(int* arrayFrom, int* arrayTo, int size)
 }
 
 void swapValues(int& firstValue, int& secondValue)
-{ 
+{
 	int temp = firstValue;
 	firstValue = secondValue;
 	secondValue = temp;
@@ -139,11 +139,6 @@ int computeCostWay(int* array, int** matrix, int size) {
 	return cost;
 }
 
-void completionProgramm()
-{
-	std::cout << "ERROR!";
-	exit(0);
-}
 
 int indexMinNumberInRow(int** matrix, int quantityCities, int row)
 {
@@ -168,8 +163,7 @@ void exactAlgorithm(int quantityCities, int startCity)
 	clock_t start = clock();
 
 	int** matrixWays = createMatrix(quantityCities);
-	//inputMatrix(matrixWays, quantityCities);
-	generateRandomMatrix(matrixWays, quantityCities);
+	inputMatrix(matrixWays, quantityCities);
 	outputMatrix(matrixWays, quantityCities);
 
 	int* currentWay = createArray(quantityCities + 1),
@@ -272,8 +266,7 @@ void heuristicAlgorithm(int quantityCities, int startCity) {
 
 
 	int** matrixCost = createMatrix(quantityCities);
-	//inputMatrix(matrixCost, quantityCities);
-	generateRandomMatrix(matrixCost, quantityCities);
+	inputMatrix(matrixCost, quantityCities);
 	outputMatrix(matrixCost, quantityCities);
 
 
@@ -289,7 +282,7 @@ void heuristicAlgorithm(int quantityCities, int startCity) {
 
 
 	for (int i = 1; i < quantityCities;) {
-		
+
 		// Looking for the best column index.
 		indexMinNum = indexMinNumberInRow(matrixCost, quantityCities, currentCity);
 
@@ -319,8 +312,8 @@ void heuristicAlgorithm(int quantityCities, int startCity) {
 
 	// Length from last to initial.
 	currentLength += matrixCost[currentWay[quantityCities - 1] - 1][startCity - 1];
-	
-	
+
+
 	clock_t end = clock();
 
 

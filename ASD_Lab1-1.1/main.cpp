@@ -15,7 +15,8 @@ int main() {
 
 	if (startCity > quantityCities || startCity <= 0) {
 
-		completionProgramm();
+		std::cout << "Error!";
+		return 0;
 
 	}
 
