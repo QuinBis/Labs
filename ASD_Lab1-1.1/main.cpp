@@ -50,8 +50,8 @@ int main() {
 
 	// Report.
 	
-
-	// Консоль иначе выводит -inf.
+	// Консоль выводит -inf
+	
 	if (maxLength == heurLength) {
 		qualitySolution = 0;
 	}
