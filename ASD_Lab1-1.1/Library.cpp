@@ -71,14 +71,14 @@ void inputMatrix(int** matrix, int cols)
 
 void generateRandomMatrix(int** matrix, int rows)
 {
-	//srand((unsigned int)time(0));
+	srand((unsigned int)time(0));
 
 	for (int i = 0; i < rows; i++) {
 
 		for (int j = 0; j < rows; j++) {
 
 			if (i != j) {
-				matrix[i][j] = rand() % (100) + 1; // (1000) + 1 || (10 000) + 1 || (100 000) + 1
+				matrix[i][j] = rand() % (10000) + 1; // (1000) + 1 || (10 000) + 1 || (100 000) + 1
 			}
 
 			else {
@@ -157,17 +157,26 @@ int indexMinNumberInRow(int** matrix, int quantityCities, int row)
 	return column;
 }
 
-void exactAlgorithm(int quantityCities, int startCity)
+void copyMatrix(int** matrixFrom, int** matrixTo, int quantityCities) {
+
+	for (int i = 0; i < quantityCities; i++) {
+		for (int j = 0; j < quantityCities; j++) {
+			matrixTo[i][j] = matrixFrom[i][j];
+		}
+	}
+}
+
+void exactAlgorithm(int** matrixOne, int quantityCities, int* maxLength, int* minLength, int startCity)
 {
 
 	clock_t start = clock();
 
 	int** matrixWays = createMatrix(quantityCities);
-	inputMatrix(matrixWays, quantityCities);
-	outputMatrix(matrixWays, quantityCities);
+	copyMatrix(matrixOne, matrixWays,quantityCities);
 
 	int* currentWay = createArray(quantityCities + 1),
-		*minimumWay = createArray(quantityCities + 1);
+		*minimumWay = createArray(quantityCities + 1),
+		*maximumWay = createArray(quantityCities + 1);
 
 	for (int i = 0, k = 1; i < quantityCities; ) {
 
@@ -192,16 +201,16 @@ void exactAlgorithm(int quantityCities, int startCity)
 
 	int countCycles = 1;
 
-	std::cout << "\nPossible ways for this solution : \n";
-	outputArray(currentWay, quantityCities + 1);
 
 	int currentLength = computeCostWay(currentWay, matrixWays, quantityCities);
 
 
 	copyArray(currentWay, minimumWay, quantityCities + 1);
+	copyArray(currentWay, maximumWay, quantityCities + 1);
 
 	int nextIndex,
-		minimumLength = currentLength;
+		minimumLength = currentLength,
+		maximumLength = currentLength;
 
 
 
@@ -233,6 +242,13 @@ void exactAlgorithm(int quantityCities, int startCity)
 
 					}
 
+					if (maximumLength < currentLength) {
+
+						copyArray(currentWay, maximumWay, quantityCities + 1);
+						maximumLength = currentLength;
+
+					}
+
 
 					//outputArray(currentWay, quantityCities + 1);
 					countCycles++;
@@ -247,8 +263,16 @@ void exactAlgorithm(int quantityCities, int startCity)
 	clock_t end = clock();
 	double seconds = (double)(end - start) / CLOCKS_PER_SEC;
 
+	std::cout << "\t\t Exact algorithm" << std::endl;
+
+	copyArray(maximumWay, maxLength, quantityCities + 1);
+	copyArray(minimumWay, minLength, quantityCities + 1);
+
 	std::cout << "\nThe minimum cost way is : "; outputArray(minimumWay, quantityCities + 1);
 	std::cout << "The cost of this way : " << minimumLength << std::endl;
+
+	std::cout << "The maximum cost way is : "; outputArray(maximumWay, quantityCities + 1);
+	std::cout << "The cost of this way : " << maximumLength << std::endl;
 	std::cout << "The time - " << seconds << "s" << std::endl;
 
 
@@ -256,19 +280,18 @@ void exactAlgorithm(int quantityCities, int startCity)
 	destroyArray(currentWay, quantityCities + 1);
 	destroyArray(minimumWay, quantityCities + 1);
 	destroyMatrix(matrixWays, quantityCities);
-
+	return;
 }
 
 
-void heuristicAlgorithm(int quantityCities, int startCity) {
+void heuristicAlgorithm(int** matrixOne, int quantityCities,int* heuristicWay, int startCity) {
 
 	int currentCity = startCity - 1, currentCost = 0;
 
 
-	int** matrixCost = createMatrix(quantityCities);
-	inputMatrix(matrixCost, quantityCities);
-	outputMatrix(matrixCost, quantityCities);
 
+	int** matrixCost = createMatrix(quantityCities);
+	copyMatrix(matrixOne, matrixCost, quantityCities);
 
 	clock_t start = clock();
 
@@ -296,7 +319,11 @@ void heuristicAlgorithm(int quantityCities, int startCity) {
 			// So as not to return to the last city.
 			for (int j = 0; j < quantityCities; j++)
 				matrixCost[j][indexMinNum] = 0;
-			matrixCost[indexMinNum][currentCity] = 0;
+
+			// Exception.
+			if (quantityCities != 2) {
+				matrixCost[indexMinNum][currentCity] = 0;
+			}
 
 
 			currentCity = indexMinNum;
@@ -316,13 +343,14 @@ void heuristicAlgorithm(int quantityCities, int startCity) {
 
 	clock_t end = clock();
 
+	
 
 	double seconds = (double)(end - start) / CLOCKS_PER_SEC;
-
+	std::cout << "\t\tHeuristic algorithm" << std::endl;
 	std::cout << "\nThe minimum cost way is : "; outputArray(currentWay, quantityCities + 1);
 	std::cout << "The cost of this way : " << currentLength << std::endl;
 	std::cout << "The time - " << seconds << "s" << std::endl;
-
+	copyArray(currentWay, heuristicWay, quantityCities + 1);
 
 	destroyMatrix(matrixCost, quantityCities);
 	destroyArray(currentWay, quantityCities + 1);
