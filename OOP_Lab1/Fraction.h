@@ -17,44 +17,25 @@ class Fraction {
 
 public:
 
-	Fraction() = default;
-	Fraction(const int numerator, const int denominator);
+	Fraction() = default; // Третья очередь инициализации
+	Fraction(const int numerator, const int denominator); // Первая очередь инициализации
 	~Fraction() = default;
 
 	void print() const;
-	void scan();
 
-	Fraction SumNumbers(const Fraction &Number) const; // Сложение
-	Fraction MinusNumbers(const Fraction &Number) const; // Вычитание
-	Fraction MultiplyNumbers(const Fraction &Number) const; // Умножение
-	Fraction DivisionNumbers(const Fraction &Number) const; // Деление
+	Fraction sumNumbers(const Fraction number) const;
+	Fraction minNumbers(const Fraction number) const;
+	Fraction mulNumbers(const Fraction number) const;
+	Fraction divNumbers(const Fraction number) const;
 
-
-	Fraction operator + (const Fraction other);
-	Fraction operator - (const Fraction other);
-	Fraction operator * (const Fraction other);
-	Fraction operator / (const Fraction other);
-	Fraction operator ++();
-	Fraction operator ++(int);
-
-	void setNumerator(const int number);
-	void setDenominator(const int number);
-
-	int getNumerator() const;
-	int getDenominator() const;
+	void setNumerator(const int value);
+	void setDenominator(const int value);
 	
-	bool operator == (const Fraction other);
-	bool operator != (const Fraction other);
-	bool operator < (const Fraction other);
-	bool operator > (const Fraction other);
 
-	void reduce();
-
-	// Собственные методы
 
 private:
-	int m_numerator;
-	int m_denominator;
+	int m_numerator = 0 ; // ВТОРАЯ ОЧЕРЕДЬ ИНИЦИАЛИЗАЦИИ
+	int m_denominator = 1;
 
 
 };
