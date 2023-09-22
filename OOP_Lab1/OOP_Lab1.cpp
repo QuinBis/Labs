@@ -6,20 +6,30 @@
 int main() {
 	setlocale(0, "");
 
-	Name_Class One_Fraction = { 1 , 2 }; // Инициализация первой дроби
-	Name_Class Two_Fraction = { 1, 0 }; // Инициализация второй дроби
+	Fraction One_Fraction = { 1 , 2 }; // Инициализация первой дроби
+	Fraction Two_Fraction = { 1, 0 }; // Инициализация второй дроби
+	Fraction temp;
 
-	std::cout << "Выводим сумму..." << std::endl;
-	One_Fraction.OutputFractionTwo(One_Fraction.SumNumbers(Two_Fraction));
+	temp = One_Fraction / Two_Fraction;
 
-	std::cout << "Выводим разность..." << std::endl;
-	One_Fraction.OutputFractionTwo(One_Fraction.DiffNumbers(Two_Fraction));
+	temp.print();
 
-	std::cout << "Выводим произведение..." << std::endl;
-	One_Fraction.OutputFractionTwo(One_Fraction.MultiplyNumbers(Two_Fraction));
+	One_Fraction.print();
+	
+	One_Fraction.reduce();
 
-	std::cout << "Выводим частное..." << std::endl;
-	One_Fraction.OutputFractionTwo(One_Fraction.DivisionNumbers(Two_Fraction));
+	One_Fraction.print();
+
+	if (One_Fraction < Two_Fraction) std::cout << " true " << std::endl;
+	if (One_Fraction > Two_Fraction) std::cout << " false " << std::endl;
+
+	One_Fraction = One_Fraction * Two_Fraction;
+	One_Fraction.print();
+
+
+	return 0;
+
+	
 
 	return 0;
 }

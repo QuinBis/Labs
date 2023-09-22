@@ -13,33 +13,48 @@
 /// Класс по умолчанию - private (по сути мы всё спрятали в капсулу "ИНКАПСУЛЯЦИЯ")
 
 
-class Name_Class {
-
-	// Тело содержит определение данных класса = Член данных (свойства)
-	// И обьявление или определение функций, их обрабатывающих = член функций (методы)
+class Fraction {
 
 public:
 
-	void OutputFractionTwo(const Name_Class Number);
+	Fraction() = default;
+	Fraction(const int numerator, const int denominator);
+	~Fraction() = default;
 
-	Name_Class SumNumbers(const Name_Class Number); // Член функций - Обьявление
+	void print() const;
+	void scan();
 
-	// Член функции имеет привилегированный доступ к член-данным класса, использует их непосредственно
-	// Область их видимости (дейсвтия) - класс = они могут использоваться только с переменными этого класса, через операцию "."
-	// Член данные могут распологаться в любом месте описания класса, они видны всем член функциями
-
-	Name_Class DiffNumbers(const Name_Class Number); // Вычитание
-
-	Name_Class MultiplyNumbers(const Name_Class Number);
-
-	Name_Class DivisionNumbers(const Name_Class Number);
+	Fraction SumNumbers(const Fraction &Number) const; // Сложение
+	Fraction MinusNumbers(const Fraction &Number) const; // Вычитание
+	Fraction MultiplyNumbers(const Fraction &Number) const; // Умножение
+	Fraction DivisionNumbers(const Fraction &Number) const; // Деление
 
 
+	Fraction operator + (const Fraction other);
+	Fraction operator - (const Fraction other);
+	Fraction operator * (const Fraction other);
+	Fraction operator / (const Fraction other);
+	Fraction operator ++();
+	Fraction operator ++(int);
 
-	// Далее идут ЧЛЕН ДАННЫЕ , т.е. СВОЙСТВА 
+	void setNumerator(const int number);
+	void setDenominator(const int number);
 
-	int NumberOne; // числитель
-	int NumberTwo; // знаменатель
+	int getNumerator() const;
+	int getDenominator() const;
+	
+	bool operator == (const Fraction other);
+	bool operator != (const Fraction other);
+	bool operator < (const Fraction other);
+	bool operator > (const Fraction other);
+
+	void reduce();
+
+	// Собственные методы
+
+private:
+	int m_numerator;
+	int m_denominator;
 
 
 };

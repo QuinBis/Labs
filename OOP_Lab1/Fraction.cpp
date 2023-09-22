@@ -1,72 +1,164 @@
-
 #include <iostream>
 
 #include "Fraction.h"
 
 
-
-
 // Тип Имя_Класса :: Имя_Функции (список)  ===== Тип - типо возвращаемого значения, Список - список аргументов
 
-void Name_Class::OutputFractionTwo(const Name_Class Number) { // Вывод на экран
-
-	if (Number.NumberOne == 0) {
-		std::cout << "0" << "\n\n";
-	}
-
-	else if (Number.NumberOne == Number.NumberTwo) { std::cout << "1" << "\n\n"; }
-
-	else if (Number.NumberTwo == 0) { std::cout << "Делить на ноль нельзя!" << "\n\n"; }
-
-	else { std::cout << Number.NumberOne << "/" << Number.NumberTwo << "\n\n"; }
+void Fraction::print() const {
+	std::cout << m_numerator << "/" << m_denominator << std::endl;
 }
 
+Fraction Fraction::SumNumbers(const Fraction &Number) const{ // Сложение
 
-Name_Class Name_Class::SumNumbers(const Name_Class Number) { // Сложение
+	Fraction sum;
 
-	Name_Class sum;
+	sum.m_numerator = (m_numerator * Number.m_denominator) + (m_denominator * Number.m_numerator);
 
-	sum.NumberOne = (NumberOne * Number.NumberTwo) + (NumberTwo * Number.NumberOne);
-
-	sum.NumberTwo = NumberTwo * Number.NumberTwo;
+	sum.m_denominator = m_denominator * Number.m_denominator;
 
 	return sum;
 }
 
 
-Name_Class Name_Class::DiffNumbers(const Name_Class Number) { // Вычитание
+Fraction Fraction::MinusNumbers(const Fraction &Number) const{ // Вычитание
 
-	Name_Class Difference;
+	Fraction Minus;
 
-	Difference.NumberOne = (NumberOne * Number.NumberTwo) - (NumberTwo*Number.NumberOne);
-	Difference.NumberTwo = NumberTwo * Number.NumberTwo;
+	Minus.m_numerator = (m_numerator * Number.m_denominator) - (m_denominator*Number.m_numerator);
+	Minus.m_denominator = m_denominator * Number.m_denominator;
 
-	return Difference;
+	return Minus;
 
 }
 
-Name_Class Name_Class::MultiplyNumbers(const Name_Class Number) { // Умножение
+Fraction Fraction::MultiplyNumbers(const Fraction &Number) const { // Умножение
 
-	Name_Class Multiply = { 0 , 1 };
 
-	if ((NumberTwo * Number.NumberTwo) == 0) {
-		return Multiply;
+	if ((m_denominator * Number.m_denominator) == 0) {
+		std::cerr << "Fraction::d error: (one or two)m_numerator is 0, won't devide.";
+		return Fraction(0,1);
 	}
 
-	Multiply.NumberOne = NumberOne * Number.NumberOne;
-	Multiply.NumberTwo = NumberTwo * Number.NumberTwo;
+	Fraction Multiply;
+
+	Multiply.m_numerator = m_numerator * Number.m_numerator;
+	Multiply.m_denominator = m_denominator * Number.m_denominator;
 	return Multiply;
 }
 
-Name_Class Name_Class::DivisionNumbers(const Name_Class Number) { // Деление
+Fraction Fraction::DivisionNumbers(const Fraction &Number) const // Деление
+{
 
-	Name_Class Division = { 0 , 1 };
-
-	if ((NumberOne * Number.NumberTwo) == 0) {
-		return Division;
+	if (Number.m_numerator == 0) {
+		std::cerr << "Fraction::DivisionNumbers error: number.m_numerator is 0, won't devide.";
+		return Fraction(0,1);
 	}
+	
+	Fraction Division;
 
-	Division.NumberOne = NumberOne * Number.NumberTwo;
-	Division.NumberTwo = NumberTwo * Number.NumberOne;
+	Division.m_numerator = m_numerator * Number.m_denominator;
+	Division.m_denominator = m_denominator * Number.m_numerator;
 	return Division;
 }
+
+Fraction::Fraction(const int numerator, const int denominator) {
+	this->m_numerator = numerator;
+	if (denominator != 0) {
+		this->m_denominator = denominator;
+	}
+	else {
+
+		std::cerr << "Fraction::Fraction - error; denominator is 0" << std::endl;
+		std::cerr << "The denominator has been corrected to 1." << std::endl;
+		this->m_denominator = 1;
+
+	}
+}
+
+void Fraction::setNumerator(const int number) {
+	m_numerator = number;
+	return;
+}
+
+void Fraction::setDenominator(const int number) {
+	m_denominator = number;
+	return;
+}
+
+int Fraction::getNumerator() const {
+	return m_numerator;
+}
+
+int Fraction::getDenominator() const {
+	return m_denominator;
+}
+
+bool Fraction::operator == (const Fraction other) {
+
+	return ( (m_numerator == other.m_numerator) && (m_denominator == other.m_denominator) );
+
+}
+
+bool Fraction::operator != (const Fraction other) {
+
+	return ( !(operator == (other) ) );
+}
+
+bool Fraction::operator < (const Fraction other) {
+	return ( (m_numerator * other.m_denominator) < (other.m_numerator * m_denominator) );
+}
+
+bool Fraction::operator > (const Fraction other) {
+	return (!(operator < (other) ));
+}
+
+unsigned int computeGreatestCommonDivisior(const unsigned int denominatorOne,
+	const unsigned int denominatorTwo)
+{
+	if (denominatorOne % denominatorTwo == 0)
+		return denominatorTwo;
+	if (denominatorTwo % denominatorOne)
+		return denominatorOne;
+	if (denominatorOne > denominatorTwo)
+		return computeGreatestCommonDivisior(denominatorOne % denominatorTwo, denominatorTwo);
+	return computeGreatestCommonDivisior(denominatorOne, denominatorTwo % denominatorOne);
+}
+
+void Fraction::reduce() {
+	int nod = computeGreatestCommonDivisior(m_numerator, m_denominator);
+
+	m_numerator /= nod;
+	m_denominator /= nod;
+
+	return;
+}
+
+void Fraction::scan() {
+	std::cout << "Enter the numerator : ";
+	std::cin >> m_numerator;
+
+	std::cout << "Enter the denominator : ";
+	std::cin >> m_denominator;
+
+	while (m_denominator == 0) {
+		std::cout << "enter a non-zero denominator : ";
+		std::cin >> m_denominator;
+	}
+
+}
+
+Fraction Fraction::operator + (const Fraction other) {
+	return SumNumbers(other);
+}
+Fraction Fraction::operator - (const Fraction other) {
+	return MinusNumbers(other);
+};
+Fraction Fraction::operator * (const Fraction other) {
+	return MultiplyNumbers(other);
+}
+Fraction Fraction::operator / (const Fraction other) {
+	return DivisionNumbers(other);
+}
+
+
