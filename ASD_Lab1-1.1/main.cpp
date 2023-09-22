@@ -48,10 +48,9 @@ int main() {
 	double speedSolution = 0;
 
 
-	// Report.
+	// Отчет.
 	
-	// Консоль выводит -inf
-	
+	// Консоль выводит -inf.
 	if (maxLength == heurLength) {
 		qualitySolution = 0;
 	}
