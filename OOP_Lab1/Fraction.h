@@ -22,6 +22,7 @@ public:
 	~Fraction() = default;
 
 	void print() const;
+	void input();
 
 	Fraction sumNumbers(const Fraction number) const;
 	Fraction minNumbers(const Fraction number) const;
@@ -40,6 +41,18 @@ public:
 	bool operator != (const Fraction twoFraction) const;
 	bool operator > (const Fraction twoFraction) const;
 	bool operator < (const Fraction twoFraction) const;
+
+	Fraction operator + (const Fraction twoFraction);
+	Fraction operator - (const Fraction twoFraction);
+	Fraction operator * (const Fraction twoFraction);
+	Fraction operator / (const Fraction twoFraction);
+
+	Fraction & operator ++ (); // suff fraction++ => fraction+1 =>      1/2++ = 3/2 
+	Fraction operator ++ (int); // postfix
+	Fraction & operator -- (); // suff
+	Fraction operator -- (int); // postfix
+
+	Fraction shifter();
 
 
 private:

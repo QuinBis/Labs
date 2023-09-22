@@ -27,6 +27,21 @@ void Fraction::print() const
 
 }
 
+void Fraction::input() 
+{
+	std::cout << "Enter the numerator : ";
+	std::cin >> m_numerator;
+
+	std::cout << "Enter the denominator : ";
+	std::cin >> m_denominator;
+
+	// Checking for correctness.
+	while (m_denominator == 0) {
+		std::cout << ("Enter the denominator != 0  : ");
+		std::cin >> m_denominator;
+	}
+}
+
 Fraction Fraction::sumNumbers(const Fraction number) const
 {
 
@@ -139,4 +154,72 @@ bool Fraction::operator < (const Fraction twoFraction) const {
 
 	return (!operator > (twoFraction));
 
+}
+
+Fraction Fraction::operator + (const Fraction twoFraction)
+{
+	return sumNumbers(twoFraction);
+}
+
+Fraction Fraction::operator - (const Fraction twoFraction)
+{
+	return minNumbers(twoFraction);
+}
+
+Fraction Fraction::operator * (const Fraction twoFraction)
+{
+	return mulNumbers(twoFraction);
+}
+
+Fraction Fraction::operator / (const Fraction twoFraction)
+{
+	return divNumbers(twoFraction);
+}
+
+Fraction & Fraction::operator ++ ()
+{
+	if (m_denominator < 0) {
+		m_denominator = -m_denominator;
+		m_numerator = (-m_numerator) + m_denominator;
+		return *this;
+
+	}
+	else {
+		m_numerator += m_denominator;
+		return *this;
+	}
+}
+
+Fraction Fraction::operator ++ (int)
+{
+	Fraction increment = *this;
+	operator ++ ();
+	return increment;
+}
+
+Fraction & Fraction::operator -- ()
+{
+	if (m_denominator < 0) {
+		m_denominator = (-m_denominator);
+		m_numerator = (-m_numerator) - m_denominator;
+		return *this;
+	}
+	else {
+		m_numerator -= m_denominator;
+		return *this;
+	}
+}
+
+Fraction Fraction::operator -- (int)
+{
+	Fraction dekrement = *this;
+	operator -- ();
+	return dekrement;
+}
+
+Fraction Fraction::shifter() {
+	int temp = m_numerator;
+	m_numerator = m_denominator;
+	m_denominator = temp;
+	return *this;
 }
