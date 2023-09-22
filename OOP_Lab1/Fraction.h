@@ -17,8 +17,8 @@ class Fraction {
 
 public:
 
-	Fraction() = default; // Òðåòüÿ î÷åðåäü èíèöèàëèçàöèè
-	Fraction(const int numerator, const int denominator); // Ïåðâàÿ î÷åðåäü èíèöèàëèçàöèè
+	Fraction() = default;
+	Fraction(const int numerator, const int denominator);
 	~Fraction() = default;
 
 	void print() const;
@@ -30,11 +30,20 @@ public:
 
 	void setNumerator(const int value);
 	void setDenominator(const int value);
+
+	int getNumerator() const; // return value type int.
+	int getDenominator() const;
+
+	void reduce();
 	
+	bool operator == (const Fraction twoFraction) const;
+	bool operator != (const Fraction twoFraction) const;
+	bool operator > (const Fraction twoFraction) const;
+	bool operator < (const Fraction twoFraction) const;
 
 
 private:
-	int m_numerator = 0 ; // ÂÒÎÐÀß Î×ÅÐÅÄÜ ÈÍÈÖÈÀËÈÇÀÖÈÈ
+	int m_numerator = 0 ;
 	int m_denominator = 1;
 
 
