@@ -1,5 +1,4 @@
 #pragma once
 
 
-// proverka
-// проверка
+void outputArray(int* table, int size);
