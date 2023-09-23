@@ -104,7 +104,7 @@ std::vector<int> findOccurrencesRange(std::string word, std::string text, int* t
 
 	int lengthWord = word.length(),
 		lengthText = text.length(),
-		k = Start + lengthWord - 1,
+		k = Start,
 		flag = 0;
 
 	std::vector<int> allOccurrence;
@@ -115,8 +115,8 @@ std::vector<int> findOccurrencesRange(std::string word, std::string text, int* t
 		std::cout << "\nERROR : End > lengthText" << std::endl;
 		return allOccurrence;
 	}
-	if (Start + (lengthWord - 1) > End) {
-		std::cout << "\nERROR : The word doesn't fit.";
+	if (Start > End) {
+		std::cout << "\nERROR : Start > End";
 		return allOccurrence;
 	}
 
@@ -132,7 +132,7 @@ std::vector<int> findOccurrencesRange(std::string word, std::string text, int* t
 			if (word[j] == text[k]) {
 				allOccurrence.push_back(k);
 				j--; k--;
-				if (k < Start) return allOccurrence;
+				if (k < Start || k > End) return allOccurrence;
 			}
 
 			// the symbols didn't match.
