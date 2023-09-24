@@ -42,10 +42,10 @@ public:
 	bool operator > (const Fraction twoFraction) const;
 	bool operator < (const Fraction twoFraction) const;
 
-	Fraction operator + (const Fraction twoFraction);
-	Fraction operator - (const Fraction twoFraction);
-	Fraction operator * (const Fraction twoFraction);
-	Fraction operator / (const Fraction twoFraction);
+	Fraction operator + (const Fraction twoFraction) const;
+	Fraction operator - (const Fraction twoFraction) const;
+	Fraction operator * (const Fraction twoFraction) const;
+	Fraction operator / (const Fraction twoFraction) const;
 
 	Fraction & operator ++ (); // suff fraction++ => fraction+1 =>      1/2++ = 3/2 
 	Fraction operator ++ (int); // postfix

@@ -100,9 +100,17 @@ void Fraction::setNumerator(const int value)
 	m_numerator = value;
 }
 
-void Fraction::setDenominator(const int value)
+void Fraction::setDenominator(const int value) 
 {
-	m_denominator = value;
+	if (value != 0) {
+		m_denominator = value;
+	}
+
+	else {
+		std::cerr << "Fraction::Fraction - ERROR: denominator is 0" << std::endl;
+		std::cerr << "denominator has been corrected to 1" << std::endl;
+		m_denominator = 1;
+	}
 }
 
 
@@ -118,10 +126,13 @@ int computeGCD(const int numerator, const int denominator) {
 
 	if (numerator % denominator == 0)
 		return denominator;
+
 	if (denominator % numerator == 0)
 		return numerator;
+
 	if (numerator > denominator)
 		return computeGCD(numerator%denominator, denominator); 
+
 	return computeGCD(numerator, denominator%numerator);
 }
 
@@ -152,26 +163,26 @@ bool Fraction::operator > (const Fraction twoFraction) const {
 
 bool Fraction::operator < (const Fraction twoFraction) const {
 
-	return (!operator > (twoFraction));
+	return ((m_numerator * twoFraction.m_denominator) < (twoFraction.m_numerator * m_denominator)) ;
 
 }
 
-Fraction Fraction::operator + (const Fraction twoFraction)
+Fraction Fraction::operator + (const Fraction twoFraction) const
 {
 	return sumNumbers(twoFraction);
 }
 
-Fraction Fraction::operator - (const Fraction twoFraction)
+Fraction Fraction::operator - (const Fraction twoFraction) const
 {
 	return minNumbers(twoFraction);
 }
 
-Fraction Fraction::operator * (const Fraction twoFraction)
+Fraction Fraction::operator * (const Fraction twoFraction) const
 {
 	return mulNumbers(twoFraction);
 }
 
-Fraction Fraction::operator / (const Fraction twoFraction)
+Fraction Fraction::operator / (const Fraction twoFraction) const
 {
 	return divNumbers(twoFraction);
 }
@@ -218,8 +229,17 @@ Fraction Fraction::operator -- (int)
 }
 
 Fraction Fraction::shifter() {
-	int temp = m_numerator;
-	m_numerator = m_denominator;
-	m_denominator = temp;
-	return *this;
+
+	if (m_numerator == 0) {
+		std::cerr << "Method shifter cannot be executed." << std::endl;
+		return *this;
+	}
+
+	else {
+		int temp = m_numerator;
+		m_numerator = m_denominator;
+		m_denominator = temp;
+		return *this;
+	}
+
 }

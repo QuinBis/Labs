@@ -14,21 +14,25 @@ int main() {
 
 
 	//Method set.
+	std::cout << "\n Method set:" << std::endl;
 	twoFraction.setDenominator(5);
 	Three = oneFraction.mulNumbers(twoFraction);
 	Three.print();
 
 
 	// Method get.
+	std::cout << "\n Method get:" << std::endl;
 	int a = Three.getNumerator();
 	std::cout << a << std::endl;
 	
 	
 	// Method reduce.
+	std::cout << "\n Method reduce:" << std::endl;
 	Three.reduce();
 	Three.print();
 
 	// Method bool (==) , (!=) , (>) , (<).
+	std::cout << "\n Method bool:" << std::endl;
 	oneFraction = { 1 , 1 }, twoFraction = { 1, 1 };
 	bool temp = (oneFraction == twoFraction);
 	std::cout << temp << std::endl; // true. 1 == 1
@@ -46,15 +50,18 @@ int main() {
 	std::cout << temp << std::endl; // false. 1 < 0.5
 
 	// Method input.
+	std::cout << "\n Method input:" << std::endl;
 	Fraction fourFraction;
 	fourFraction.input();
 	fourFraction.print();
 
 	// Method overload.
+	std::cout << "\n Method overload :" << std::endl;
 	oneFraction = oneFraction + twoFraction;
 	oneFraction.print();
 
 	// Own method (increment).
+	std::cout << "\n Method increment :" << std::endl;
 	Fraction fiveFraction = { 1, -2 };
 	++fiveFraction;
 	fiveFraction.print();
@@ -62,14 +69,10 @@ int main() {
 	fiveFraction.print();
 
 	// Own method. (shifter).
-	Fraction sixFraction = { 10, 20 };
+	std::cout << "\n Method shifter:" << std::endl;
+	Fraction sixFraction = { 0, 20 };
 	sixFraction.shifter();
-	sixFraction.print();
-
-
-	
-
-	
+	sixFraction.print();	
 
 	return 0;
 }
