@@ -10,8 +10,8 @@ int main() {
 
 	setlocale(0, "Russian");
 
-	std::string text = "Hello world!";
-	std::string word = "world";
+	std::string text = "std::move_iterator is an iterator adaptor which behaves exactly like the underlying iterator",
+				word = "tor";
 
 
 	// building a BM table.
@@ -24,26 +24,47 @@ int main() {
 	algorithmBoyerMoore(word, text, table);
 
 
-	
-	// Testing function.
+
+	// Testing Function.
 	int firstOccurrence = findFirstOccurrence(word, text, table);
-	std::cout << "\n\nIndex of first occurrence : " << firstOccurrence << std::endl;
-
-
-
-	std::vector<int> allOccurrence = findAllOccurrence(word, text, table);
-	std::cout << "Indexes of all occurrences : ";
-	for (auto& v : allOccurrence) {
-		std::cout << v << " ";
+	if (firstOccurrence != -1) {
+		std::cout << "\nFunction findFirstOccurrence : " << firstOccurrence << std::endl;
 	}
 
-
-	std::vector<int> occurrenceRange = findOccurrencesRange(word, text, table, 6, 11);
-	std::cout << "\nIndexes of all occurrences in the range : ";
-	for (auto& v : occurrenceRange)
-		std::cout << v << " ";
-
+	std::vector<int> allOccurrence;
+	allOccurrence = findAllOccurrence(word, text, table);
+	if (allOccurrence.size() > 0) {
+		std::cout << "Function findAllOccurrence : ";
+		for (auto& vector : allOccurrence) {
+			std::cout << vector << " ";
+		}
+	}
 	
+
+	std::vector<int> occurrenceRange;
+	occurrenceRange = findOccurrencesRange(word, text, table, 0, 91);
+	if (occurrenceRange.size() > 0) {
+		std::cout << "\nFunction findOccurrencesRange in range [0, 91] : ";
+		for (auto& vector : occurrenceRange) {
+			std::cout << vector << " ";
+		}
+	}
+	
+	occurrenceRange = findOccurrencesRange(word, text, table, 17, 91);
+	if (occurrenceRange.size() > 0) {
+		std::cout << "\nFunction findOccurrencesRange in range [17, 91] : ";
+		for (auto& vector : occurrenceRange) {
+			std::cout << vector << " ";
+		}
+	}
+
+	occurrenceRange = findOccurrencesRange(word, text, table, 28, 36);
+	if (occurrenceRange.size() > 0) {
+		std::cout << "\nFunction findOccurrencesRange in range [28, 36] : ";
+		for (auto& vector : occurrenceRange) {
+			std::cout << vector << " ";
+		}
+	}
 
 
 

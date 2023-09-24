@@ -23,7 +23,7 @@ int findFirstOccurrence(std::string word, std::string text, int* table) // find 
 
 
 			if (word[j] == text[k]) {
-				return k;
+				j--;k--;
 			}
 
 
@@ -36,19 +36,16 @@ int findFirstOccurrence(std::string word, std::string text, int* table) // find 
 
 		}
 
-
-		// If no occurrence is found.
 		else if (j < 0) {
 
-			i = lengthtText;
-			flag = 1;
+			return k + 1;
 
 		}
 
 	}
 
-	std::cout << "The fist Occurrence doesn't fit." << std::endl;
-	return -1;
+	std::cout << "Function findFirstOccurence didn't find the index." << std::endl;
+	return -1;	
 	
 }
 
@@ -56,109 +53,96 @@ std::vector<int> findAllOccurrence(std::string word, std::string text, int* tabl
 
 	int lengthWord = word.length(),
 		lengthText = text.length(),
-		k = lengthWord - 1,
-		flag = 0;
+		i = lengthWord - 1,
+		j = lengthWord - 1,
+		k = i;
 
 	std::vector<int> allOccurrence;
 
-	for (int i = lengthWord - 1, j = lengthWord - 1; i < lengthText;) {
+	while (i < lengthText) {
 
 
 		if (j >= 0) {
-
-			// the symbols matched.
 			if (word[j] == text[k]) {
-				allOccurrence.push_back(k);
-				j--;k--;
+				j--; k--;
 			}
 
-			// the symbols didn't match.
 			else {
-				i = i + table[text[k]];
+				i += table[text[k]];
 				j = lengthWord - 1;
 				k = i;
 			}
-
 		}
 
-		else if (j < 0) {
-			
-			i = lengthText;
-			flag = 1;
+		if (j < 0) {
+
+			allOccurrence.push_back(k + 1);
+			j = lengthWord - 1;
+			i += table[text[k]];
+			k = i;
 
 		}
 
 	}
 
-	if (flag == 0) {
-		std::cout << "The all Occurrence doesn't fit." << std::endl;
+	if (allOccurrence.size() > 0) {
 		return allOccurrence;
 	}
 
-
-	return allOccurrence;
+	else {
+		std::cout << "Function findAllOccurence didn't find the indexes." << std::endl;
+		return allOccurrence;
+	}
 }
 
-std::vector<int> findOccurrencesRange(std::string word, std::string text, int* table, int Start, int End)
+std::vector<int> findOccurrencesRange(std::string word, std::string text, int* table, int start, int end)
 {
 
 	int lengthWord = word.length(),
 		lengthText = text.length(),
-		k = Start,
-		flag = 0;
-
-	std::vector<int> allOccurrence;
-
-
-	// check errors.
-	if (End > lengthText - 1) {
-		std::cout << "\nERROR : End > lengthText" << std::endl;
-		return allOccurrence;
-	}
-	if (Start > End) {
-		std::cout << "\nERROR : Start > End";
-		return allOccurrence;
-	}
+		i = start + lengthWord-1,
+		k = i,
+		j = lengthWord - 1;
 
 
+	std::vector<int> allOccurrenceRange;
 
-
-	for (int i = Start, j = lengthWord - 1; i < End;) {
+	while (i <= end) {
 
 
 		if (j >= 0) {
-
-			// the symbols matched.
 			if (word[j] == text[k]) {
-				allOccurrence.push_back(k);
 				j--; k--;
-				if (k < Start || k > End) return allOccurrence;
 			}
 
-			// the symbols didn't match.
 			else {
-				i = i + table[text[k]];
+				i += table[text[k]];
 				j = lengthWord - 1;
 				k = i;
 			}
-
 		}
 
-		else {
+		if (j < 0) {
 
-			i = End;
-			flag = 1;
+			allOccurrenceRange.push_back(k + 1);
+			j = lengthWord - 1;
+			i += table[text[k]];
+			k = i;
 
 		}
 
 	}
-	if (flag == 0) {
-		std::cout << "\n The word doesn't fit.";
-		return allOccurrence;
+
+	if (allOccurrenceRange.size() > 0) {
+		return allOccurrenceRange;
+	}
+
+	else {
+		std::cout << "Function findAllOccurence didn't find the indexes." << std::endl;
+		return allOccurrenceRange;
 	}
 
 
-	return allOccurrence;
 }
 
 void algorithmBoyerMoore(std::string word, std::string text, int* table) {
@@ -170,12 +154,10 @@ void algorithmBoyerMoore(std::string word, std::string text, int* table) {
 
 	for (int i = lengthWord - 1, j = lengthWord - 1; i < lengthText;) {
 
-
 		if (j >= 0) {
 
 			// the symbols matched.
 			if (word[j] == text[k]) {
-				std::cout << "The symbol of the word " << word[j] << " coincided with the symbol of the text " << text[k] << std::endl;
 				j--;k--;
 			}
 
@@ -189,8 +171,7 @@ void algorithmBoyerMoore(std::string word, std::string text, int* table) {
 		}
 
 		else if (j < 0) {
-			std::cout << "\n\t\tThe word has been found!" << std::endl;
-			std::cout << "\t\tIndex of the beginning of the occurrence : " << i;
+			std::cout << "BM search found a word, the index of occurrence : " << k+1;
 			i = lengthText;
 			flag = 1;
 		}
@@ -198,7 +179,7 @@ void algorithmBoyerMoore(std::string word, std::string text, int* table) {
 	}
 
 	if (flag == 0) {
-		std::cout << "The word doesn't fit." << std::endl;
+		std::cout << "BM search did not find the word." << std::endl;
 	}
 
 
