@@ -13,61 +13,51 @@ int main() {
 	std::string text = "std::move_iterator is an iterator adaptor which behaves exactly like the underlying iterator",
 				word = "tor";
 
-
-	// building a BM table.
-
-	int table[256] = { 0 };
-
-	computeTableBM(table, word);
-
-	// implementation of the BM algorithm.
-	algorithmBoyerMoore(word, text, table);
+	int bmsearch = algorithmBoyerMoore(word, text);
+	if (bmsearch != -1) {
+		std::cout << "\nBM search : " << bmsearch << std::endl;
+	}
 
 
 
 	// Testing Function.
-	int firstOccurrence = findFirstOccurrence(word, text, table);
+	int firstOccurrence = findFirstOccurrence(word, text);
 	if (firstOccurrence != -1) {
 		std::cout << "\nFunction findFirstOccurrence : " << firstOccurrence << std::endl;
 	}
 
 	std::vector<int> allOccurrence;
-	allOccurrence = findAllOccurrence(word, text, table);
+	allOccurrence = findAllOccurrence(word, text);
 	if (allOccurrence.size() > 0) {
 		std::cout << "Function findAllOccurrence : ";
 		for (auto& vector : allOccurrence) {
 			std::cout << vector << " ";
 		}
 	}
-	
 
-	std::vector<int> occurrenceRange;
-	occurrenceRange = findOccurrencesRange(word, text, table, 0, 91);
-	if (occurrenceRange.size() > 0) {
-		std::cout << "\nFunction findOccurrencesRange in range [0, 91] : ";
-		for (auto& vector : occurrenceRange) {
-			std::cout << vector << " ";
-		}
-	}
-	
-	occurrenceRange = findOccurrencesRange(word, text, table, 17, 91);
-	if (occurrenceRange.size() > 0) {
-		std::cout << "\nFunction findOccurrencesRange in range [17, 91] : ";
-		for (auto& vector : occurrenceRange) {
+	std::vector<int> occurrencesInRange = findOccurrencesRange(word, text, 0, 91);
+	if (occurrencesInRange.size() > 0) {
+		std::cout << "\nFunctioon findOccurrencesRange range [0,91] : ";
+		for (auto& vector : occurrencesInRange) {
 			std::cout << vector << " ";
 		}
 	}
 
-	occurrenceRange = findOccurrencesRange(word, text, table, 28, 36);
-	if (occurrenceRange.size() > 0) {
-		std::cout << "\nFunction findOccurrencesRange in range [28, 36] : ";
-		for (auto& vector : occurrenceRange) {
+	std::vector<int> occurrencesInRange2 = findOccurrencesRange(word, text, 17, 91);
+	if (occurrencesInRange.size() > 0) {
+		std::cout << "\nFunctioon findOccurrencesRange range [17, 91] : ";
+		for (auto& vector : occurrencesInRange2) {
 			std::cout << vector << " ";
 		}
 	}
 
-
-
+	std::vector<int> occurrencesInRange3 = findOccurrencesRange(word, text, 28, 36);
+	if (occurrencesInRange.size() > 0) {
+		std::cout << "\nFunctioon findOccurrencesRange range [28, 36] : ";
+		for (auto& vector : occurrencesInRange3) {
+			std::cout << vector << " ";
+		}
+	}
 
 	return 0;
 }

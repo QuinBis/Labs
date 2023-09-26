@@ -1,14 +1,11 @@
 #pragma once
 
+std::vector<int> occurrence(std::string word, std::string text, int start, int end);
 
-void outputArray(int* table, int size);
+int algorithmBoyerMoore(std::string word, std::string text);
 
-void computeTableBM(int* table, std::string word);
+int findFirstOccurrence(std::string word, std::string text);
 
-void algorithmBoyerMoore(std::string word, std::string text, int* table);
+std::vector<int> findAllOccurrence(std::string word, std::string text);
 
-int findFirstOccurrence(std::string word, std::string text, int* table);
-
-std::vector<int> findAllOccurrence(std::string word, std::string text, int* table);
-
-std::vector<int> findOccurrencesRange(std::string word, std::string text, int* table, int Start, int End);
+std::vector<int> findOccurrencesRange(std::string word, std::string text,int start, int end);
