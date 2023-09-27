@@ -19,7 +19,6 @@ int main() {
 	}
 
 
-
 	// Testing Function.
 	int firstOccurrence = findFirstOccurrence(word, text);
 	if (firstOccurrence != -1) {
