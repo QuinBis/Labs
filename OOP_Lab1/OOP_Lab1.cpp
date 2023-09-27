@@ -46,6 +46,8 @@ int main() {
 	temp = (oneFraction > twoFraction);
 	std::cout << temp << std::endl; // true. 1 > 0.5
 
+	oneFraction = { 1, 1 }, twoFraction = { 1 , 1 };
+	std::cout << "<<<<<<<<<<<" << std::endl;
 	temp = (oneFraction < twoFraction);
 	std::cout << temp << std::endl; // false. 1 < 0.5
 

@@ -4,7 +4,7 @@
 #include "Header.h"
 
 
-std::vector<int> occurrence(std::string word, std::string text,int start = 0, int end = 1000) {
+std::vector<int> occurrence(std::string word, std::string text,int start = 0, int end = INT_MAX) {
 
 	int lengthWord = word.length(),
 		lengthText = text.length(),
@@ -26,11 +26,10 @@ std::vector<int> occurrence(std::string word, std::string text,int start = 0, in
 
 	// Find all occurrences in range.
 
-	if (end == 1000)
+	if (end == INT_MAX)
 		end = lengthText - 1;
 
 	while (i <= end) {
-
 
 		if (j >= 0) {
 			if (word[j] == text[k]) {
@@ -45,16 +44,12 @@ std::vector<int> occurrence(std::string word, std::string text,int start = 0, in
 		}
 
 		if (j < 0) {
-
+			
 			allOccurrence.push_back(k + 1);
-			j = lengthWord - 1;
-			i += table[text[k]];
-			k = i;
-
+			return allOccurrence;
 		}
 
 	}
-
 	return allOccurrence;
 }
 
@@ -75,30 +70,54 @@ int findFirstOccurrence(std::string word, std::string text) // find First Occurr
 
 std::vector<int> findAllOccurrence(std::string word, std::string text) {
 
-	std::vector<int> occurrences = occurrence(word, text);
-	if (occurrences.size() > 0) {
-		return occurrences;
-	}
+	int lengthText = text.length(),
+		lengthWord = word.length(),
+		start = 0,
+		temp,
+		end = lengthText-1;
 
-	else {
-		std::cout << "\nNo occurrences found." << std::endl;
-		return occurrences;
+	std::vector<int> occurrTemp,
+							occurrences;
+
+	for (int i = 0; start < end;) {
+
+		occurrTemp = occurrence(word, text, start, end);
+		
+		if (occurrTemp.size() > 0) {
+			occurrences.push_back(occurrTemp[0]);
+			start = occurrTemp[0] + (lengthWord-1);
+		}
+
 	}
+	
+	return occurrences;
 
 }
 
 std::vector<int> findOccurrencesRange(std::string word, std::string text, int start, int end)
 {
-	
-	std::vector<int> rangeOccurrences = occurrence(word, text, start, end);
-	if (rangeOccurrences.size() > 0) {
-		return rangeOccurrences;
+	int lengthText = text.length(),
+		lengthWord = word.length();
+
+	std::vector<int> occurrTemp,
+		occurrences;
+
+	for (int i = 0; start < end;) {
+
+		occurrTemp = occurrence(word, text, start, end);
+
+		if (occurrTemp.size() > 0) {
+			occurrences.push_back(occurrTemp[0]);
+			start = occurrTemp[0] + (lengthWord - 1);
+		}
+		else {
+			start += end;
+		}
+
 	}
 
-	else {
-		std::cout << "\nNo occurrences found." << std::endl;
-		return rangeOccurrences;
-	}
+	return occurrences;
+
 }
 
 int algorithmBoyerMoore(std::string word, std::string text) {

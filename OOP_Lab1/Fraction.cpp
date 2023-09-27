@@ -163,7 +163,7 @@ bool Fraction::operator > (const Fraction twoFraction) const {
 
 bool Fraction::operator < (const Fraction twoFraction) const {
 
-	return ((m_numerator * twoFraction.m_denominator) < (twoFraction.m_numerator * m_denominator)) ;
+	return ( (!operator > (twoFraction)) && (!operator == (twoFraction)) );
 
 }
 
