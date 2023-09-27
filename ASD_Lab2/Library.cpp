@@ -4,7 +4,7 @@
 #include "Header.h"
 
 
-std::vector<int> occurrence(std::string word, std::string text,int start = 0, int end = INT_MAX) {
+std::vector<int> occurrence(std::string word, std::string text,int* table, int start = 0, int end = INT_MAX) {
 
 	int lengthWord = word.length(),
 		lengthText = text.length(),
@@ -13,16 +13,6 @@ std::vector<int> occurrence(std::string word, std::string text,int start = 0, in
 		k = i;
 
 	std::vector<int> allOccurrence;
-
-	// Compute Table BM.
-
-	int table[256] = { 0 };
-
-	for (int i = 0; i < 256; i++) table[i] = lengthWord;
-
-	for (int i = 0; i < lengthWord - 1; i++) {
-		table[word[i]] = lengthWord - 1 - i;
-	}
 
 	// Find all occurrences in range.
 
@@ -56,7 +46,17 @@ std::vector<int> occurrence(std::string word, std::string text,int start = 0, in
 
 int findFirstOccurrence(std::string word, std::string text) // find First Occurrence
 {
-	std::vector<int> firstOccurrence = occurrence(word, text);
+	int lengthWord = word.length();
+	
+	int table[256] = { 0 };
+
+	for (int i = 0; i < 256; i++) table[i] = lengthWord;
+
+	for (int i = 0; i < lengthWord - 1; i++) {
+		table[word[i]] = lengthWord - 1 - i;
+	}
+
+	std::vector<int> firstOccurrence = occurrence(word, text, table);
 	
 	if (firstOccurrence.size() > 0) {
 		return firstOccurrence[0];
@@ -76,12 +76,20 @@ std::vector<int> findAllOccurrence(std::string word, std::string text) {
 		temp,
 		end = lengthText-1;
 
+	int table[256] = { 0 };
+
+	for (int i = 0; i < 256; i++) table[i] = lengthWord;
+
+	for (int i = 0; i < lengthWord - 1; i++) {
+		table[word[i]] = lengthWord - 1 - i;
+	}
+
 	std::vector<int> occurrTemp,
 							occurrences;
 
 	for (int i = 0; start < end;) {
 
-		occurrTemp = occurrence(word, text, start, end);
+		occurrTemp = occurrence(word, text, table, start, end);
 		
 		if (occurrTemp.size() > 0) {
 			occurrences.push_back(occurrTemp[0]);
@@ -99,12 +107,20 @@ std::vector<int> findOccurrencesRange(std::string word, std::string text, int st
 	int lengthText = text.length(),
 		lengthWord = word.length();
 
+	int table[256] = { 0 };
+
+	for (int i = 0; i < 256; i++) table[i] = lengthWord;
+
+	for (int i = 0; i < lengthWord - 1; i++) {
+		table[word[i]] = lengthWord - 1 - i;
+	}
+
 	std::vector<int> occurrTemp,
 		occurrences;
 
 	for (int i = 0; start < end;) {
 
-		occurrTemp = occurrence(word, text, start, end);
+		occurrTemp = occurrence(word, text, table, start, end);
 
 		if (occurrTemp.size() > 0) {
 			occurrences.push_back(occurrTemp[0]);
@@ -121,16 +137,25 @@ std::vector<int> findOccurrencesRange(std::string word, std::string text, int st
 }
 
 int algorithmBoyerMoore(std::string word, std::string text) {
-	
-	std::vector<int> firstOccurrence = occurrence(word, text);
 
-	if (firstOccurrence.size() > 0) {
-		return firstOccurrence[0];
+	int lengthWord = word.length();
+
+	int table[256] = { 0 };
+
+	for (int i = 0; i < 256; i++) table[i] = lengthWord;
+
+	for (int i = 0; i < lengthWord - 1; i++) {
+		table[word[i]] = lengthWord - 1 - i;
+	}
+	
+	std::vector<int> bmOccurrence = occurrence(word, text, table);
+
+	if (bmOccurrence.size() > 0) {
+		return bmOccurrence[0];
 	}
 
 	else {
 		std::cout << "\nNo occurrences found." << std::endl;
 		return -1;
 	}
-
 }

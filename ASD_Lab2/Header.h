@@ -1,6 +1,6 @@
 #pragma once
 
-std::vector<int> occurrence(std::string word, std::string text, int start, int end);
+std::vector<int> occurrence(std::string word, std::string text,int* table, int start, int end);
 
 int algorithmBoyerMoore(std::string word, std::string text);
 
