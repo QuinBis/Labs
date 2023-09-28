@@ -11,3 +11,5 @@ std::vector<int> findAllOccurrence(std::string word, std::string text);
 std::vector<int> findOccurrencesRange(std::string word, std::string text,int start, int end);
 
 int* computeTable(std::string word);
+
+void freeMemoryTable(int* table);

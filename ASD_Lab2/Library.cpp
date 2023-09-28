@@ -57,6 +57,11 @@ int* computeTable(std::string word) {
 	return table;
 }
 
+void freeMemoryTable(int* table) {
+
+	delete[]table;
+}
+
 
 int findFirstOccurrence(std::string word, std::string text) // find First Occurrence
 {
@@ -67,13 +72,17 @@ int findFirstOccurrence(std::string word, std::string text) // find First Occurr
 	int firstOccurrence = occurrence(word, text, tableBM);
 	
 	if (firstOccurrence != -1) {
+		freeMemoryTable(tableBM);
 		return firstOccurrence;
 	}
 
 	else {
 		std::cout << "\nNo occurrences found." << std::endl;
+		freeMemoryTable(tableBM);
 		return -1;
 	}
+
+
 }
 
 std::vector<int> findAllOccurrence(std::string word, std::string text) {
@@ -100,7 +109,7 @@ std::vector<int> findAllOccurrence(std::string word, std::string text) {
 		}
 
 	}
-	
+	freeMemoryTable(tableBM);
 	return occurrences;
 
 }
@@ -129,6 +138,7 @@ std::vector<int> findOccurrencesRange(std::string word, std::string text, int st
 
 	}
 
+	freeMemoryTable(tableBM);
 	return occurrences;
 
 }
@@ -142,11 +152,13 @@ int algorithmBoyerMoore(std::string word, std::string text) {
 	int bmOccurrence = occurrence(word, text, tableBM);
 
 	if (bmOccurrence != -1) {
+		freeMemoryTable(tableBM);
 		return bmOccurrence;
 	}
 
 	else {
 		std::cout << "\nNo occurrences found." << std::endl;
+		freeMemoryTable(tableBM);
 		return -1;
 	}
 }
