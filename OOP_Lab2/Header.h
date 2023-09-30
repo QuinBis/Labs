@@ -13,8 +13,8 @@ public:
 
 	int getSize() const;
 	int getIndexElement(const int value) const;
-	int getIndexMaxElement();
-	int getIndexMinElement();
+	int getIndexMaxElement() const;
+	int getIndexMinElement() const;
 
 	void printArray() const;
 	void scanArray(const int size);
@@ -28,6 +28,11 @@ public:
 
 	int &operator [] (const int index);
 	Array &operator = (const Array &other);
+	Array operator + (const Array &other);
+	Array &operator += (const Array &other);
+	
+	bool operator == (const Array &other) const;
+	bool operator != (const Array &other) const;
 
 
 

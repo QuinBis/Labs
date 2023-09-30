@@ -283,7 +283,7 @@ bool Array::popAllElementsByValue(const int value)
 
 }
 
-int Array::getIndexMaxElement()
+int Array::getIndexMaxElement() const
 {
 
 	int value = m_array[0],
@@ -304,7 +304,7 @@ int Array::getIndexMaxElement()
 
 }
 
-int Array::getIndexMinElement()
+int Array::getIndexMinElement() const
 {
 
 	int value = m_array[0],
@@ -321,4 +321,55 @@ int Array::getIndexMinElement()
 	}
 
 	return index; // ???
+}
+
+Array Array::operator + (const Array &other)
+{
+
+	int newSize = m_size + other.m_size;
+	
+	Array temporaryArray(newSize, 0);
+
+	for (int i = 0, j = 0; i < newSize; i++) {
+		if (i < m_size) {
+			temporaryArray[i] = m_array[i];
+		}
+
+		else {
+			temporaryArray[i] = other.m_array[j];
+			j++;
+		}
+	}
+
+	return temporaryArray;
+
+}
+
+Array &Array::operator += (const Array &other) {
+
+	*this = *this + other;
+
+	return *this;
+}
+
+bool Array::operator == (const Array &other) const
+{
+	if (m_size != other.m_size) {
+		return false;
+	}
+
+	for (int i = 0; i < m_size; i++) {
+		
+		if (m_array[i] != other.m_array[i]) {
+			return false;
+		}
+	}
+
+	return true;
+
+}
+
+bool Array::operator != (const Array &other) const
+{
+	return !(*this == other);
 }
