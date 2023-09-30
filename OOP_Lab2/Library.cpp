@@ -249,3 +249,76 @@ int &Array::operator [] (const int index)
 	assert(index >= 0 && index < m_size);
 	return m_array[index];
 }
+
+bool Array::popAllElementsByValue(const int value)
+{
+
+	int* temporaryArray = new int[m_size];
+	int newSize = 0;
+
+	for (int i = 0, j = 0; i < m_size; i++, j++) {
+
+		if (m_array[i] != value) {
+			temporaryArray[j] = m_array[i];
+			newSize++;
+		}
+		else {
+			j--;
+		}
+
+	}
+
+	delete[] m_array;
+
+	m_size = newSize;
+	m_array = new int[m_size];
+	for (int i = 0; i < m_size; i++) {
+		m_array[i] = temporaryArray[i];
+	}
+	
+	delete[] temporaryArray;
+
+	return true;
+
+
+}
+
+int Array::getIndexMaxElement()
+{
+
+	int value = m_array[0],
+		index = 0;
+
+	for (int i = 0; i < m_size; i++) {
+
+		if (m_array[i] > value) {
+
+			value = m_array[i];
+			index = i;
+
+		}
+
+	}
+
+	return index; // ???? or value????
+
+}
+
+int Array::getIndexMinElement()
+{
+
+	int value = m_array[0],
+		index = 0;
+
+	for (int i = 0; i < m_size; i++) {
+
+		if (m_array[i] < value) {
+
+			value = m_array[i];
+			index = i;
+
+		}
+	}
+
+	return index; // ???
+}

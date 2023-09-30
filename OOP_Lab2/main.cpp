@@ -65,6 +65,21 @@ int main() {
 
 	std::cout << "&Array::operator [3] : " << arrThree[3] << std::endl;
 
+	std::cout << "Array::popAllElementsByValue(0) : start array -> ";
+	Array arrFour(5, 0);
+	arrFour.printArray();
+	arrFour[4] = 1;
+	arrFour.popAllElementsByValue(0);
+	std::cout << "\t\t\t\t  end array   -> ";
+	arrFour.printArray();
+
+	int maxElement = arrTwo.getIndexMaxElement(),
+		minElement = arrTwo.getIndexMinElement();
+
+	arrTwo.printArray();
+	std::cout << "Array::getIndexMaxElement : index is " << maxElement << std::endl;
+	std::cout << "Array::getIndexMinElement : index is " << minElement << std::endl;
+
 
 
 	return 0;
