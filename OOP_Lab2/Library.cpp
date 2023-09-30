@@ -1,5 +1,6 @@
 #include <iostream>
 #include <assert.h>
+#include <time.h>
 
 #include "Header.h"
 
@@ -345,7 +346,8 @@ Array Array::operator + (const Array &other)
 
 }
 
-Array &Array::operator += (const Array &other) {
+Array &Array::operator += (const Array &other)
+{
 
 	*this = *this + other;
 
@@ -372,4 +374,51 @@ bool Array::operator == (const Array &other) const
 bool Array::operator != (const Array &other) const
 {
 	return !(*this == other);
+}
+
+void Array::setRandom(const int min, const int max)
+{
+	srand((unsigned int) time(0));
+
+	for (int i = 0; i < m_size; i++) {
+		m_array[i] = rand() % (max - min + 1) + min;
+	}
+
+}
+
+void Array::setIncreaseRandom()
+{
+	srand((unsigned int) time(0));
+
+	m_array[0] = rand() % 10 + 1;
+
+	for (int i = 1; i < m_size; i++) {
+		m_array[i] = m_array[i - 1] + rand() % 5 + 1; // + (1 -> 5)
+	}
+}
+
+void Array::setDecreaseRandom()
+{
+	srand((unsigned int) time(0));
+
+	m_array[m_size - 1] = rand () % 10 + 1;
+
+	for (int i = m_size - 2; i >= 0; i--) {
+		m_array[i] = m_array[i + 1] + rand() % + 10 + 1; // + (1 -> 10)
+	}
+
+}
+
+Array Array::operator + (const int value)
+{
+
+	addElementByIndex(m_size, value);
+	return *this;
+
+}
+
+Array &Array::operator += (const int value)
+{
+	*this = *this + value;
+	return *this;
 }

@@ -21,6 +21,11 @@ public:
 
 	void sort(); // shaker sort.
 
+	void setRandom(const int min, const int max);
+	void setIncreaseRandom();
+	void setDecreaseRandom();
+	
+
 	bool addElementByIndex(const int index, const int value);
 	bool popElementByIndex(const int index);
 	bool popFirstElementByValue(const int value);
@@ -30,6 +35,8 @@ public:
 	Array &operator = (const Array &other);
 	Array operator + (const Array &other);
 	Array &operator += (const Array &other);
+	Array operator + (const int value);
+	Array &operator += (const int value);
 	
 	bool operator == (const Array &other) const;
 	bool operator != (const Array &other) const;
