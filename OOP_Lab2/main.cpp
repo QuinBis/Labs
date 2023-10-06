@@ -12,18 +12,14 @@
 int main() {
 
 	Array one(5, 0);
-	one.scanArray(5);
-	std::cout << one << std::endl;
+	one.setRandom(100,500);
+	one.printArray();
 
-	one.insert(5, 10);
-	std::cout << one << std::endl;
-	// Изначальный массив [2, 3, 5, 9, 10]
-	// После использования метода insert -> [0, 2, 3, 5, 9, 10]
-	// Итератор it2 остался также указывать на 2 (по условию). 
+	for (auto it = one.begin(); it != one.end(); it++) {
 
+	}
 
-
-
+	
 
 
 	

@@ -5,6 +5,7 @@
 class Array {
 public:
 	class Iterator;
+	class ConstIterator;
 
 public:
 	Array(const int size = 10, const int value = 0);
@@ -74,8 +75,9 @@ public:
 
 	int &operator*();
 
-	Iterator &operator++();
+	Iterator &operator++();	
 	Iterator operator++(int);
+	Iterator operator +(const int value);
 
 	bool operator==(const Iterator &other) const;
 	bool operator!=(const Iterator &other) const;
@@ -85,3 +87,27 @@ private:
 	Array *m_array = nullptr;
 	int m_pos = 0;
 };
+
+class Array::ConstIterator
+{
+public:
+
+	friend class Array;
+
+	ConstIterator(Array *array, const int position);
+
+	const int &operator*();
+
+	const ConstIterator &operator++();
+	const ConstIterator operator++(int);
+	const ConstIterator operator +(const int value);
+
+	bool operator==(const ConstIterator &other) const;
+	bool operator!=(const ConstIterator &other) const;
+
+
+private:
+	Array *m_array = nullptr;
+	int m_pos = 0;
+};
+

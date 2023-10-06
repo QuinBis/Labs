@@ -485,6 +485,11 @@ bool Array::Iterator::operator != (const Iterator &other) const
 	return !( operator==(other) );
 }
 
+Array::Iterator Array::Iterator::operator+(const int value) {
+	m_pos += 5;
+	return *this;
+}
+
 Array::Iterator Array::insert (const Iterator &other, const int value)
 {
 
@@ -500,7 +505,9 @@ Array::Iterator Array::insert (const Iterator &other, const int value)
 
 Array::Iterator Array::erase(const Iterator &other, const Iterator &otherTwo)
 {
-	assert(other.m_pos == otherTwo.m_pos);
+	assert(other.m_array == otherTwo.m_array);
+	assert(other.m_pos > otherTwo.m_pos);
+
 
 	int* temporaryArray = new int[m_size];
 	Iterator temporaryIt = otherTwo;
@@ -519,9 +526,8 @@ Array::Iterator Array::erase(const Iterator &other, const Iterator &otherTwo)
 	
 	int newSize = m_size - (otherTwo.m_pos - other.m_pos + 1);
 
-	delete[] m_array;
-
-	m_array = temporaryArray;
+	std::swap(m_array, temporaryArray);
+	std::swap(m_size, newSize);
 	
 	temporaryIt++;
 
@@ -542,6 +548,7 @@ std::ostream &operator<<(std::ostream &stream, const Array &arr)
 std::istream &operator>>(std::istream &stream, Array &arr)
 {	
 	for (int i = 0; i < arr.getSize(); ++i) {
+		std::cout << "[" << i << "] = ";
 		stream >> arr[i];
 	}
 
