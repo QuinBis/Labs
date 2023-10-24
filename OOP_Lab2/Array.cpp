@@ -1,4 +1,4 @@
-#include <iostream>
+п»ї#include <iostream>
 #include <assert.h>
 #include <algorithm>
 #include <time.h>
@@ -11,6 +11,7 @@ Array::Array(const int size, const int value)
 	if (size < 0) {
 		std::cerr << "Array:Arrray: size is negative, invert..." << std::endl;
 		m_size = -size;
+		std::cerr << "Size = " << m_size;
 	}
 	else {
 		m_size = size;
@@ -22,32 +23,67 @@ Array::Array(const int size, const int value)
 	for (int i = 0; i < m_size; i++) {
 		m_array[i] = value;
 	}
+
+}
+
+Array::Array(const int* array, const int size)
+{
+	assert(size != 0);
+
+	if (size < 0) {
+		std::cerr << "Array::Array: size is negative, invert..." << std::endl;
+		m_size = -size;
+	}
+	else {
+		m_size = size;
+	}
+
+	m_array = new int[m_size];
+
+	for (int i = 0; i < m_size; i++) {
+		m_array[i] = array[i];
+	}
 }
 
 
-Array::Array(const Array &other) : m_size(other.m_size)
+Array::Array(const Array& other) : m_size(other.m_size)
 {
 	m_array = new int[m_size];
 
-	for (int i = 0;i < m_size; ++i) {
+	for (int i = 0; i < m_size; ++i) {
 		m_array[i] = other.m_array[i];
 	}
 }
 
 Array::~Array() {
+	
 	delete[] m_array;
-}
-
-Array::Array(Array &&other)
-{
-	//m_size == 0, m_array == nullptr
-	std::cout << "Array::Array(Array &&other): begin \n";
-	swapArrays(other);
 }
 
 int Array::getSize() const
 {
 	return m_size;
+}
+
+void Array::swap(Array& other) {
+
+	std::swap(m_size, other.m_size);
+	std::swap(m_array, other.m_array);
+
+}
+
+int Array::getIndex(const int value) const
+{
+
+	for (int i = 0; i < m_size; ++i) {
+
+		if (m_array[i] == value) {
+			return i;
+		}
+
+	}
+
+	return -1;
 }
 
 void Array::printArray() const
@@ -57,7 +93,6 @@ void Array::printArray() const
 
 void Array::scanArray(const int size)
 {
-
 	assert(size != 0);
 
 	if (size < 0) {
@@ -67,40 +102,10 @@ void Array::scanArray(const int size)
 	else {
 		m_size = size;
 	}
-	
-	Array temp(m_size,0);
+
+	Array temp(m_size, 0);
 	std::cin >> temp;
-	this->swapArrays(temp);
-}
-
-void Array::resize(int size) {
-	if (size < 0) {
-		std::cerr << "ArraY::resize: size is negative, invert... \n";
-		size = -size;
-	}
-	
-	Array res(size);
-
-	int count = std::min(m_size, size);
-	for (int i = 0; i < count; ++i) {
-		res.m_array[i] = m_array[i];
-	}
-
-	res.swapArrays(*this);
-}
-
-int Array::getIndex(const int value) const
-{
-
-	for (int i = 0; i < m_size; i++) {
-
-		if (m_array[i] == value) {
-			return i;
-		}
-
-	}
-
-	return -1;
+	this->swap(temp);
 }
 
 void Swap(int* x, int* y) {
@@ -137,9 +142,9 @@ void Array::sort() const
 bool Array::insert(const int index, const int value)
 {
 
-	if ( index < 0 || index > m_size) {
+	if (index < 0 || index > m_size) {
 		std::cerr << "Array::addElementByIndex : index is invalid " << std::endl;
-		return false;
+		return false;	
 	}
 
 	int* temporaryArray = new int[m_size + 1];
@@ -157,9 +162,11 @@ bool Array::insert(const int index, const int value)
 
 	}
 
-	std::swap(m_array, temporaryArray);
+	delete[] m_array;
+
 	m_size++;
-	
+	m_array = temporaryArray;
+
 	return true;
 }
 
@@ -185,18 +192,19 @@ bool Array::erase(const int index)
 
 	}
 
-	std::swap(m_array, temporaryArray);
+	delete[] m_array;
+
 	m_size--;
+	m_array = temporaryArray;
 
 	return true;
 }
-
 
 bool Array::eraseFirst(const int value)
 {
 
 	for (int i = 0; i < m_size; i++) {
-		
+
 		if (m_array[i] == value) {
 			erase(i);
 			return true;
@@ -212,6 +220,7 @@ bool Array::eraseAll(const int value)
 {
 
 	int* temporaryArray = new int[m_size];
+
 	int newSize = 0;
 
 	for (int i = 0, j = 0; i < m_size; i++, j++) {
@@ -226,11 +235,53 @@ bool Array::eraseAll(const int value)
 
 	}
 
-	std::swap(m_array, temporaryArray);
-	std::swap(m_size, newSize);
+	delete[] m_array;
+	
+	m_size = newSize;
 
+	m_array = temporaryArray;
 
 	return true;
+}
+
+int Array::getMaxValue() const
+{
+
+	assert(m_size > 0);
+
+	int temp = m_array[0];
+
+	for (int i = 0; i < m_size; i++) {
+
+		if (m_array[i] > temp) {
+
+			temp = m_array[i];
+
+		}
+
+	}
+
+	return temp;
+
+}
+
+int Array::getMinValue() const
+{
+	assert(m_size > 0);
+
+
+	int temp = m_array[0];
+
+	for (int i = 0; i < m_size; i++) {
+
+		if (m_array[i] < temp) {
+
+			temp = m_array[i];
+
+		}
+	}
+
+	return temp;
 }
 
 void Array::setRandom(const int min, const int max) const
@@ -266,84 +317,59 @@ void Array::setDecrease() const
 
 }
 
-int Array::getIndexMax() const
+Array& Array::operator = (const Array& other)
 {
-	
-	if (m_size == 0) {
-		std::cerr << "Array::getIndexMinElement : size is 0..., returned -1";
-		return -1;
+
+	if (this == &other) {
+		return *this;
 	}
 
-	int value = m_array[0],
-		index = 0;
+	if (m_size != other.m_size) {
+		m_size = other.m_size;
+		delete[] m_array;
+		m_array = new int[m_size];
+	}
 
 	for (int i = 0; i < m_size; i++) {
-
-		if (m_array[i] > value) {
-
-			value = m_array[i];
-			index = i;
-
-		}
-
+		m_array[i] = other.m_array[i];
 	}
-
-	return index;
-
-}
-
-int Array::getIndexMin() const
-{
-	if (m_size == 0) {
-		std::cerr << "Array::getIndexMinElement : size is 0..., returned -1";
-		return -1;
-	}
-
-
-	int value = m_array[0],
-		index = 0;
-
-	for (int i = 0; i < m_size; i++) {
-
-		if (m_array[i] < value) {
-
-			value = m_array[i];
-			index = i;
-
-		}
-	}
-
-	return index;
-}
-
-Array Array::operator + (const int value)
-{
-	int newSize = m_size + 1;
-
-	Array temporaryArray(newSize, 0);
-
-	for (int i = 0; i < newSize-1; i++) {
-		temporaryArray.m_array[i] = m_array[i];
-	}
-
-	temporaryArray.m_array[newSize-1] = value;
-
-	return temporaryArray;
-}
-
-Array &Array::operator += (const int value)
-{
-
-	*this = *this + value;
 
 	return *this;
 }
 
-Array Array::operator + (const Array &other) const
+int& Array::operator [] (const int index) const
+{
+	assert(index >= 0 || index < m_size);
+	return m_array[index];
+}
+
+bool Array::operator == (const Array& other) const
+{
+	if (m_size != other.m_size) {
+		return false;
+	}
+
+	for (int i = 0; i < m_size; i++) {
+
+		if (m_array[i] != other.m_array[i]) {
+			return false;
+		}
+	}
+
+	return true;
+
+}
+
+bool Array::operator != (const Array& other) const
+{
+	return !(*this == other);
+}
+
+Array Array::operator + (const Array& other) const
 {
 
 	int newSize = m_size + other.m_size;
-	
+
 	Array temporaryArray(newSize, 0);
 
 	for (int i = 0, j = 0; i < newSize; i++) {
@@ -357,90 +383,43 @@ Array Array::operator + (const Array &other) const
 		}
 	}
 
+	std::cout << "Array Array::operator + (const Array& other) const" << std::endl;
 	return temporaryArray;
 }
 
-/*
-Array &Array::operator = (const Array &&other) { // семантика перемещения
-	if (this == &other) return*this;
-	delete[] m_array;
-	m_array = other.m_array;
-	other.m_array = nulptr;
-	m_size = other.m_size;
-}
-*/
-
-
-Array &Array::operator += (const Array &other)
+Array& Array::operator += (const Array& other)
 {
 
-	Array temp = *this + other;
-	this->swapArrays(temp);
+	*this = *this + other;
 
-	//*this = *this + other; // std::move(*this + other); явное перемещение этой переменной в *this.
+	std::cout << "Array& Array::operator += (const Array& other)" << std::endl;
+	return *this;
+}
+
+Array Array::operator + (const int value)
+{
+	int newSize = m_size + 1;
+
+	Array temporaryArray(newSize, 0);
+
+	for (int i = 0; i < newSize - 1; i++) {
+		temporaryArray.m_array[i] = m_array[i];
+	}
+
+	temporaryArray.m_array[newSize - 1] = value;
+
+	return temporaryArray;
+}
+
+Array& Array::operator += (const int value)
+{
+
+	*this = *this + value;
 
 	return *this;
 }
 
-Array &Array::operator = (const Array &other)
-{
-	// Array &Array::operator=(Array other)
-	// { swap(other); return *this;
-
-	if (this == &other) {
-		return *this;
-	}
-	if (m_size != other.m_size) {
-		m_size = other.m_size;
-		delete[] m_array;
-		m_array = new int[m_size];
-	}
-
-	for (int i = 0; i < m_size; i++) {
-		m_array[i] = other.m_array[i];
-	}
-
-	return *this;
-
-	// swapArray(other) ; return *this;
-}
-
-bool Array::operator == (const Array &other) const
-{
-	if (m_size != other.m_size) {
-		return false;
-	}
-
-	for (int i = 0; i < m_size; i++) {
-		
-		if (m_array[i] != other.m_array[i]) {
-			return false;
-		}
-	}
-
-	return true;
-
-}
-
-bool Array::operator != (const Array &other) const
-{
-	return !(*this == other);
-}
-
-int &Array::operator [] (const int index) const
-{
-	assert(index >= 0 && index < m_size);
-	return m_array[index];
-}
-
-void Array::swapArrays(Array &other) {
-
-	std::swap(m_size, other.m_size);
-	std::swap(m_array, other.m_array);
-
-}
-
-Array::Iterator::Iterator(Array *array, const int position)
+Array::Iterator::Iterator(Array* array, const int position)
 	: m_array(array)
 	, m_pos(position)
 {}
@@ -455,12 +434,16 @@ Array::Iterator Array::end()
 	return Iterator(this, m_size);
 }
 
-int &Array::Iterator::operator*()
+int& Array::Iterator::operator*()
 {
 	return (*m_array)[m_pos];
 }
 
-Array::Iterator &Array::Iterator::operator++()
+int Array::Iterator::getPosition() const {
+	return m_pos;
+}
+
+Array::Iterator& Array::Iterator::operator++()
 {
 	++m_pos;
 	return *this;
@@ -473,28 +456,27 @@ Array::Iterator Array::Iterator::operator++(int)
 	return old;
 }
 
-
-bool Array::Iterator::operator == (const Iterator &other) const
+bool Array::Iterator::operator == (const Iterator& other) const
 {
 	assert(m_array == other.m_array);
 	return (m_pos == other.m_pos && m_array == other.m_array);
 }
 
-bool Array::Iterator::operator != (const Iterator &other) const
+bool Array::Iterator::operator != (const Iterator& other) const
 {
-	return !( operator==(other) );
+	return !(operator==(other));
 }
 
-Array::Iterator Array::Iterator::operator+(const int value) {
-	m_pos += 5;
+Array::Iterator &Array::Iterator::operator += (const int &value) {
+	m_pos += value;
 	return *this;
 }
 
-Array::Iterator Array::insert (const Iterator &other, const int value)
+Array::Iterator Array::insert(const Iterator& other, const int value)
 {
 
 	Iterator temporaryIt = other;
-	
+
 	insert(temporaryIt.m_pos, value);
 
 	temporaryIt.m_pos++;
@@ -503,7 +485,7 @@ Array::Iterator Array::insert (const Iterator &other, const int value)
 
 }
 
-Array::Iterator Array::erase(const Iterator &other, const Iterator &otherTwo)
+Array::Iterator Array::erase(const Iterator& other, const Iterator& otherTwo)
 {
 	assert(other.m_array == otherTwo.m_array);
 	assert(other.m_pos > otherTwo.m_pos);
@@ -511,7 +493,7 @@ Array::Iterator Array::erase(const Iterator &other, const Iterator &otherTwo)
 
 	int* temporaryArray = new int[m_size];
 	Iterator temporaryIt = otherTwo;
-	
+
 	for (int i = 0, j = 0; i < m_size; i++, j++) {
 
 		if (i < other.m_pos || i > otherTwo.m_pos) {
@@ -523,19 +505,35 @@ Array::Iterator Array::erase(const Iterator &other, const Iterator &otherTwo)
 			j--;
 		}
 	}
-	
+
 	int newSize = m_size - (otherTwo.m_pos - other.m_pos + 1);
 
 	std::swap(m_array, temporaryArray);
 	std::swap(m_size, newSize);
-	
+
 	temporaryIt++;
 
 	return temporaryIt;
 
 }
 
-std::ostream &operator<<(std::ostream &stream, const Array &arr)
+void Array::resize(int size) {
+	if (size < 0) {
+		std::cerr << "ArraY::resize: size is negative, invert... \n";
+		size = -size;
+	}
+
+	Array res(size);
+
+	int count = std::min(m_size, size);
+	for (int i = 0; i < count; ++i) {
+		res.m_array[i] = m_array[i];
+	}
+
+	res.swap(*this);
+}
+
+std::ostream& operator<<(std::ostream& stream, const Array& arr)
 {
 	stream << '[';
 	for (int i = 0; i < arr.getSize() - 1; ++i) {
@@ -545,8 +543,8 @@ std::ostream &operator<<(std::ostream &stream, const Array &arr)
 
 	return stream;
 }
-std::istream &operator>>(std::istream &stream, Array &arr)
-{	
+std::istream& operator>>(std::istream& stream, Array& arr)
+{
 	for (int i = 0; i < arr.getSize(); ++i) {
 		std::cout << "[" << i << "] = ";
 		stream >> arr[i];
@@ -554,3 +552,4 @@ std::istream &operator>>(std::istream &stream, Array &arr)
 
 	return stream;
 }
+

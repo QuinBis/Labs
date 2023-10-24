@@ -1,113 +1,86 @@
-#pragma once
-
-
-
 class Array {
 public:
 	class Iterator;
-	class ConstIterator;
 
 public:
-	Array(const int size = 10, const int value = 0);
-	Array(const Array &other);
-	Array(Array &&other);
-	~Array();
+	Array(const int size = 10, const int value = 0);					// Конструктор по умолчанию 
+	Array(const int* array, const int size);							// Конструктор из обычного массива	
+	Array(const Array& other);											// Конструктор копирования
+	~Array();															// Деструктор
 
-	Iterator begin();
-	Iterator end();
-	Iterator insert(const Iterator &other, const int value);
-	Iterator erase(const Iterator &other, const Iterator &otherTwo);
+	int getSize() const;												// Получить количество хранимых элементов
 
-	int getSize() const;
-	
-	int getIndex(const int value) const;
-	int getIndexMax() const;
-	int getIndexMin() const;
+	void swap(Array& other);											// Обмен содержимого с другим массивом
 
-	void printArray() const;
-	void scanArray(const int size);
-	void sort() const;
+	int getIndex(const int value) const;								// Поиск индекса элемента по значению
 
-	bool insert(const int index, const int value);
+	void printArray() const;											// Вывод в консоль
+	void scanArray(const int size);										// Ввод с консоли
 
-	void setRandom(const int min, const int max) const;
-	void setIncrease() const;
-	void setDecrease() const;
+	void sort() const;													// Шейкерная сортировка
 
-	void swapArrays(Array &other);
+	bool insert(const int index, const int value);						// Вставка элемента по индексу
+	bool erase(const int index);										// Удаление элемента по индексу
+	bool eraseFirst(const int value);									// Удаление элемента по значению
+	bool eraseAll(const int value);										// Удаление всех элементов по значению
 
-	bool erase(const int index);
-	bool eraseFirst(const int value);
-	bool eraseAll(const int value);
+	int getMaxValue() const;											// Получение максимального элемента
+	int getMinValue() const;											// Получение минимального элемента
 
-	int &operator [] (const int index) const;
+	void setRandom(const int min, const int max) const;					// Генерация последовательности от-до
+	void setIncrease() const;											// Генерация возрастающей последовательности
+	void setDecrease() const;											// Генерация убывающей последовательности
 
-	Array &operator = (const Array &other); // A = B
-	Array operator + (const Array &other) const; // A = B + C
-	Array &operator += (const Array &other); // A += B
+	Array& operator = (const Array& other);								// Оператор присваивания
+	int& operator [] (const int index) const;							// Получение ссылки на элемент по индексу
 
-	Array operator + (const int value);
-	Array &operator += (const int value);
-	
-	bool operator == (const Array &other) const;
-	bool operator != (const Array &other) const;
+	bool operator == (const Array& other) const;						// Сравнение двух массивов
+	bool operator != (const Array& other) const;						// Несравнение двух массивов
+
+	Array operator + (const Array& other) const;						// Конкатенация A = B + C	
+	Array& operator += (const Array& other);							// Конкатенация A += B
+
+	Array operator + (const int value);									// Добавление элемента в конец массива A = B + 5
+	Array& operator += (const int value);								// Добавление элемента в конец массива A += 5
+
+	Iterator begin();													// Получение итератора на начало
+	Iterator end();														// Получение итератора на конец
+
+	Iterator insert(const Iterator& other, const int value);
+	Iterator erase(const Iterator& other, const Iterator& otherTwo);
 
 	void resize(int size);
 
-
-
 private:
-	int* m_array;
-	int m_size;
+	int* m_array = nullptr;
+	int m_size = 0;
 };
 
-std::ostream &operator<<(std::ostream &stream, const Array &arr);
-std::istream &operator>>(std::istream &stream, Array &arr);
+std::ostream& operator<<(std::ostream& stream, const Array& arr);
+std::istream& operator>>(std::istream& stream, Array& arr);
 
 
 class Array::Iterator
 {
 public:
-	
-	friend class Array;
-
-	Iterator(Array *array, const int position);
-
-	int &operator*();
-
-	Iterator &operator++();	
-	Iterator operator++(int);
-	Iterator operator +(const int value);
-
-	bool operator==(const Iterator &other) const;
-	bool operator!=(const Iterator &other) const;
-
-
-private:
-	Array *m_array = nullptr;
-	int m_pos = 0;
-};
-
-class Array::ConstIterator
-{
-public:
 
 	friend class Array;
 
-	ConstIterator(Array *array, const int position);
+	Iterator(Array* array = nullptr, const int position = 0);			// Конструктор по умолчанию
 
-	const int &operator*();
+	int& operator*();													// Оператор разыменовования 
+	int getPosition() const;											// Получение позиции итератора
 
-	const ConstIterator &operator++();
-	const ConstIterator operator++(int);
-	const ConstIterator operator +(const int value);
+	Iterator& operator++();												// Увеличить на 1 позицию итератора
+	Iterator operator++(int);											// прибавить после 1
 
-	bool operator==(const ConstIterator &other) const;
-	bool operator!=(const ConstIterator &other) const;
+	Iterator &operator += (const int &value);							// Сместить итератора на позиций
+
+	bool operator == (const Iterator& other) const;						// Равенство итераторов
+	bool operator != (const Iterator& other) const;						// Неравенство итераторов
 
 
 private:
-	Array *m_array = nullptr;
+	Array* m_array = nullptr;
 	int m_pos = 0;
 };
-
