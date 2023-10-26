@@ -1,11 +1,16 @@
 #pragma once
 
-int* createArray(int cols);
-void outputArray(int* array, int cols);
-void setRundArray(int* array, int size, int max, int min);
-void setIncrease(int* array, int size);
-void setDecrease(int* array, int size);
+void setRandomNumbers(std::vector<int>& numbers, int size, int min, int max);
 
-bool isSorted(int* array, int size);
+bool isSorted(const std::vector<int> numbers);
 
-std::vector<int> shellSort(int* array, int size);
+void sorting(std::vector<int>& numbers, const int step);
+void stepsShell(std::vector<int>& numbers);
+void stepsPapernovStasevich(std::vector<int>& numbers);
+void stepsHibbard(std::vector<int>& numbers);
+
+
+
+
+
+void outputnum(std::vector<int> numbers);
