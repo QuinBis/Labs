@@ -1,53 +1,58 @@
+
+template <typename Type>
 class Array {
 public:
-	class Iterator;
+	template <typename IterType, typename ArrType>
+	class TemplateIterator;
+	using Iterator = TemplateIterator<Type, Array>;
+	using ConstIterator = TemplateIterator<const Type, const Array>;
 
 public:
-	Array(const int size = 10, const int value = 0);					// Конструктор по умолчанию 
-	Array(const int* array, const int size);							// Конструктор из обычного массива	
-	Array(const Array& other);											// Конструктор копирования
-	~Array();															// Деструктор
+	Array(const int size = 10, const Type& value = Type());		
+	Array(const Type* array, const int size);							
+	Array(const Type& other);										
+	~Array();														
 
-	int getSize() const;												// Получить количество хранимых элементов
+	int getSize() const;											
 
-	void swap(Array& other);											// Обмен содержимого с другим массивом
+	void swap(Array& other);											
 
-	int getIndex(const int value) const;								// Поиск индекса элемента по значению
+	int getIndex(const Type& value) const;							
 
-	void printArray() const;											// Вывод в консоль
-	void scanArray(const int size);										// Ввод с консоли
+	void printArray() const;										
+	void scanArray(const int size);									
 
-	void sort() const;													// Шейкерная сортировка
+	void sort() const;												
 
-	bool insert(const int index, const int value);						// Вставка элемента по индексу
-	bool erase(const int index);										// Удаление элемента по индексу
-	bool eraseFirst(const int value);									// Удаление элемента по значению
-	bool eraseAll(const int value);										// Удаление всех элементов по значению
+	bool insert(const int index, const Type& value);					
+	bool erase(const int index);									
+	bool eraseFirst(const Type& value);									
+	bool eraseAll(const Type& value);									
 
-	int getMaxValue() const;											// Получение максимального элемента
-	int getMinValue() const;											// Получение минимального элемента
+	Type getMaxValue() const;									
+	Type getMinValue() const;									
 
-	void setRandom(const int min, const int max) const;					// Генерация последовательности от-до
-	void setIncrease() const;											// Генерация возрастающей последовательности
-	void setDecrease() const;											// Генерация убывающей последовательности
+	void setRandom(const int min, const int max) const;					
+	void setIncrease() const;										
+	void setDecrease() const;											
 
-	Array& operator = (const Array& other);								// Оператор присваивания
-	int& operator [] (const int index) const;							// Получение ссылки на элемент по индексу
+	Array& operator = (const Array& other);						
+	Type& operator [] (const int index) const;							
 
-	bool operator == (const Array& other) const;						// Сравнение двух массивов
-	bool operator != (const Array& other) const;						// Несравнение двух массивов
+	bool operator == (const Array& other) const;				
+	bool operator != (const Array& other) const;				
 
-	Array operator + (const Array& other) const;						// Конкатенация A = B + C	
-	Array& operator += (const Array& other);							// Конкатенация A += B
+	Array operator + (const Array& other) const;				
+	Array& operator += (const Array& other);					
 
-	Array operator + (const int value);									// Добавление элемента в конец массива A = B + 5
-	Array& operator += (const int value);								// Добавление элемента в конец массива A += 5
+	Array operator + (const Type& value);							
+	Array& operator += (const Type& value);								
 
-	Iterator begin();													// Получение итератора на начало
-	Iterator end();														// Получение итератора на конец
+	Iterator begin();												
+	Iterator end();												
 
-	Iterator insert(const Iterator& other, const int value);
-	Iterator erase(const Iterator& other, const Iterator& otherTwo);
+	Iterator insert(const Iterator other, const Type& value);
+	Iterator erase(const Iterator other, const Iterator otherTwo);
 
 	void resize(int size);
 
@@ -56,31 +61,36 @@ private:
 	int m_size = 0;
 };
 
-std::ostream& operator<<(std::ostream& stream, const Array& arr);
-std::istream& operator>>(std::istream& stream, Array& arr);
 
-
-class Array::Iterator
+template <typename Type>
+template <typename IterType, typename ArrType>
+class Array<Type>::TemplateIterator
 {
 public:
 
 	friend class Array;
 
-	Iterator(Array* array = nullptr, const int position = 0);			// Конструктор по умолчанию
+	TemplateIterator(ArrType* array = nullptr, const int position = 0);
 
-	int& operator*();													// Оператор разыменовования 
-	int getPosition() const;											// Получение позиции итератора
+	IterType& operator*();									
+	int getPosition() const;									
 
-	Iterator& operator++();												// Увеличить на 1 позицию итератора
-	Iterator operator++(int);											// прибавить после 1
+	TemplateIterator& operator++();								
+	TemplateIterator operator++(int);							
 
-	Iterator &operator += (const int &value);							// Сместить итератора на позиций
+	TemplateIterator &operator += (const int &value);			
 
-	bool operator == (const Iterator& other) const;						// Равенство итераторов
-	bool operator != (const Iterator& other) const;						// Неравенство итераторов
+	bool operator == (const TemplateIterator& other) const;		
+	bool operator != (const TemplateIterator& other) const;			
 
 
 private:
-	Array* m_array = nullptr;
+	ArrType* m_array = nullptr;
 	int m_pos = 0;
 };
+
+template<typename Type>
+std::ostream& operator<<(std::ostream& stream, const Array<Type>& arr);
+
+template<typename Type>
+std::istream& operator>>(std::istream& stream, Array<Type>& arr);

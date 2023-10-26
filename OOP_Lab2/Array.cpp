@@ -5,7 +5,8 @@
 
 #include "Array.h"
 
-Array::Array(const int size, const int value)
+template<typename Type>
+Array<Type>::Array(const int size, const Type& value)
 {
 
 	if (size < 0) {
@@ -18,7 +19,7 @@ Array::Array(const int size, const int value)
 	}
 
 
-	m_array = new int[m_size];
+	m_array = new Type [m_size];
 
 	for (int i = 0; i < m_size; i++) {
 		m_array[i] = value;
@@ -26,7 +27,8 @@ Array::Array(const int size, const int value)
 
 }
 
-Array::Array(const int* array, const int size)
+template<typename Type>
+Array<Type>::Array(const Type* array, const int size)
 {
 	assert(size != 0);
 
@@ -38,41 +40,45 @@ Array::Array(const int* array, const int size)
 		m_size = size;
 	}
 
-	m_array = new int[m_size];
+	m_array = new Type [m_size];
 
 	for (int i = 0; i < m_size; i++) {
 		m_array[i] = array[i];
 	}
 }
 
-
-Array::Array(const Array& other) : m_size(other.m_size)
+template<typename Type>
+Array<Type>::Array(const Type& other) : m_size(other.m_size)
 {
-	m_array = new int[m_size];
+	m_array = new Type [m_size];
 
 	for (int i = 0; i < m_size; ++i) {
 		m_array[i] = other.m_array[i];
 	}
 }
 
-Array::~Array() {
+template<typename Type>
+Array<Type>::~Array() {
 	
 	delete[] m_array;
 }
 
-int Array::getSize() const
+template<typename Type>
+int Array<Type>::getSize() const
 {
 	return m_size;
 }
 
-void Array::swap(Array& other) {
+template<typename Type>
+void Array<Type>::swap(Array& other) {
 
 	std::swap(m_size, other.m_size);
 	std::swap(m_array, other.m_array);
 
 }
 
-int Array::getIndex(const int value) const
+template<typename Type>
+int Array<Type>::getIndex(const Type& value) const
 {
 
 	for (int i = 0; i < m_size; ++i) {
@@ -86,12 +92,14 @@ int Array::getIndex(const int value) const
 	return -1;
 }
 
-void Array::printArray() const
+template<typename Type>
+void Array<Type>::printArray() const
 {
 	std::cout << *this;
 }
 
-void Array::scanArray(const int size)
+template<typename Type>
+void Array<Type>::scanArray(const int size)
 {
 	assert(size != 0);
 
@@ -114,7 +122,8 @@ void Swap(int* x, int* y) {
 	*y = value;
 }
 
-void Array::sort() const
+template<typename Type> 
+void Array<Type>::sort() const
 { // shaker Sort
 
 	int i, j, k, n = m_size;
@@ -139,7 +148,8 @@ void Array::sort() const
 
 }
 
-bool Array::insert(const int index, const int value)
+template<typename Type>
+bool Array<Type>::insert(const int index, const Type& value)
 {
 
 	if (index < 0 || index > m_size) {
@@ -170,7 +180,8 @@ bool Array::insert(const int index, const int value)
 	return true;
 }
 
-bool Array::erase(const int index)
+template<typename Type>
+bool Array<Type>::erase(const int index)
 {
 
 	if (index < 0 || index > m_size) {
@@ -200,7 +211,8 @@ bool Array::erase(const int index)
 	return true;
 }
 
-bool Array::eraseFirst(const int value)
+template<typename Type>
+bool Array<Type>::eraseFirst(const Type& value)
 {
 
 	for (int i = 0; i < m_size; i++) {
@@ -215,11 +227,11 @@ bool Array::eraseFirst(const int value)
 	return false;
 }
 
-
-bool Array::eraseAll(const int value)
+template<typename Type>
+bool Array<Type>::eraseAll(const Type& value)
 {
 
-	int* temporaryArray = new int[m_size];
+	int* temporaryArray = new Type [m_size];
 
 	int newSize = 0;
 
@@ -244,7 +256,8 @@ bool Array::eraseAll(const int value)
 	return true;
 }
 
-int Array::getMaxValue() const
+template<typename Type>
+Type Array<Type>::getMaxValue() const
 {
 
 	assert(m_size > 0);
@@ -265,7 +278,8 @@ int Array::getMaxValue() const
 
 }
 
-int Array::getMinValue() const
+template<typename Type>
+Type Array<Type>::getMinValue() const
 {
 	assert(m_size > 0);
 
@@ -284,7 +298,8 @@ int Array::getMinValue() const
 	return temp;
 }
 
-void Array::setRandom(const int min, const int max) const
+template<typename Type>
+void Array<Type>::setRandom(const int min, const int max) const
 {
 	srand((unsigned int)time(0));
 
@@ -294,7 +309,8 @@ void Array::setRandom(const int min, const int max) const
 
 }
 
-void Array::setIncrease() const
+template<typename Type>
+void Array<Type>::setIncrease() const
 {
 	srand((unsigned int)time(0));
 
@@ -305,7 +321,8 @@ void Array::setIncrease() const
 	}
 }
 
-void Array::setDecrease() const
+template<typename Type>
+void Array<Type>::setDecrease() const
 {
 	srand((unsigned int)time(0));
 
@@ -317,7 +334,8 @@ void Array::setDecrease() const
 
 }
 
-Array& Array::operator = (const Array& other)
+template<typename Type>
+Array<Type>& Array<Type>::operator = (const Array& other)
 {
 
 	if (this == &other) {
@@ -327,7 +345,7 @@ Array& Array::operator = (const Array& other)
 	if (m_size != other.m_size) {
 		m_size = other.m_size;
 		delete[] m_array;
-		m_array = new int[m_size];
+		m_array = new Type [m_size];
 	}
 
 	for (int i = 0; i < m_size; i++) {
@@ -337,13 +355,15 @@ Array& Array::operator = (const Array& other)
 	return *this;
 }
 
-int& Array::operator [] (const int index) const
+template<typename Type>
+Type& Array<Type>::operator [] (const int index) const
 {
 	assert(index >= 0 || index < m_size);
 	return m_array[index];
 }
 
-bool Array::operator == (const Array& other) const
+template<typename Type>
+bool Array<Type>::operator == (const Array& other) const
 {
 	if (m_size != other.m_size) {
 		return false;
@@ -360,12 +380,14 @@ bool Array::operator == (const Array& other) const
 
 }
 
-bool Array::operator != (const Array& other) const
+template<typename Type>
+bool Array<Type>::operator != (const Array& other) const
 {
 	return !(*this == other);
 }
 
-Array Array::operator + (const Array& other) const
+template<typename Type>
+Array<Type> Array<Type>::operator + (const Array& other) const
 {
 
 	int newSize = m_size + other.m_size;
@@ -387,7 +409,8 @@ Array Array::operator + (const Array& other) const
 	return temporaryArray;
 }
 
-Array& Array::operator += (const Array& other)
+template<typename Type>
+Array<Type>& Array<Type>::operator += (const Array& other)
 {
 
 	*this = *this + other;
@@ -396,7 +419,8 @@ Array& Array::operator += (const Array& other)
 	return *this;
 }
 
-Array Array::operator + (const int value)
+template<typename Type>
+Array<Type> Array<Type>::operator + (const Type& value)
 {
 	int newSize = m_size + 1;
 
@@ -411,7 +435,8 @@ Array Array::operator + (const int value)
 	return temporaryArray;
 }
 
-Array& Array::operator += (const int value)
+template<typename Type>
+Array<Type>& Array<Type>::operator += (const Type& value)
 {
 
 	*this = *this + value;
@@ -419,60 +444,79 @@ Array& Array::operator += (const int value)
 	return *this;
 }
 
-Array::Iterator::Iterator(Array* array, const int position)
+template <typename Type>
+template <typename IterType, typename ArrType>
+Array<Type>::TemplateIterator<IterType, ArrType>::TemplateIterator(ArrType* array, const int position)
 	: m_array(array)
 	, m_pos(position)
 {}
 
-Array::Iterator Array::begin()
+template <typename Type> typename
+Array<Type>::Iterator Array<Type>::begin()
 {
 	return Iterator(this, 0);
 }
 
-Array::Iterator Array::end()
+template <typename Type> typename
+Array<Type>::Iterator Array<Type>::end()
 {
 	return Iterator(this, m_size);
 }
 
-int& Array::Iterator::operator*()
+template <typename Type>
+template <typename IterType, typename ArrType>
+IterType& Array<Type>::TemplateIterator<IterType, ArrType>::operator*()
 {
 	return (*m_array)[m_pos];
 }
 
-int Array::Iterator::getPosition() const {
+template <typename Type>
+template <typename IterType, typename ArrType>
+int Array<Type>::TemplateIterator<IterType, ArrType>::getPosition() const {
 	return m_pos;
 }
 
-Array::Iterator& Array::Iterator::operator++()
+template <typename Type>
+template <typename IterType, typename ArrType>
+Array<Type>::TemplateIterator<IterType, ArrType>& Array<Type>::TemplateIterator<IterType, ArrType>::operator++()
 {
 	++m_pos;
 	return *this;
 }
 
-Array::Iterator Array::Iterator::operator++(int)
+template <typename Type>
+template <typename IterType, typename ArrType>
+Array<Type>::TemplateIterator<IterType, ArrType> Array<Type>::TemplateIterator<IterType, ArrType>::operator++(int)
 {
 	Iterator old(*this);
 	m_pos++;
 	return old;
 }
 
-bool Array::Iterator::operator == (const Iterator& other) const
+template <typename Type>
+template <typename IterType, typename ArrType>
+bool Array<Type>::TemplateIterator<IterType, ArrType>::operator == (const TemplateIterator& other) const
 {
 	assert(m_array == other.m_array);
 	return (m_pos == other.m_pos && m_array == other.m_array);
 }
 
-bool Array::Iterator::operator != (const Iterator& other) const
+template <typename Type>
+template <typename IterType, typename ArrType>
+bool Array<Type>::TemplateIterator<IterType, ArrType>::operator != (const TemplateIterator& other) const
 {
 	return !(operator==(other));
 }
 
-Array::Iterator &Array::Iterator::operator += (const int &value) {
+template <typename Type>
+template <typename IterType, typename ArrType>
+Array<Type>::TemplateIterator<IterType, ArrType>&Array<Type>::TemplateIterator<IterType, ArrType>::operator += (const int &value) {
 	m_pos += value;
 	return *this;
 }
 
-Array::Iterator Array::insert(const Iterator& other, const int value)
+template <typename Type> typename
+Array<Type>::Iterator Array<Type>::insert(const Iterator other, const Type& value)
 {
 
 	Iterator temporaryIt = other;
@@ -485,19 +529,21 @@ Array::Iterator Array::insert(const Iterator& other, const int value)
 
 }
 
-Array::Iterator Array::erase(const Iterator& other, const Iterator& otherTwo)
+template <typename Type> typename
+Array<Type>::Iterator Array<Type>::erase(const Iterator other, const Iterator otherTwo)
 {
-	assert(other.m_array == otherTwo.m_array);
-	assert(other.m_pos > otherTwo.m_pos);
+	assert(otherTwo.m_pos >= other.m_pos);
 
+	int newSize = m_size - (otherTwo.m_pos - other.m_pos);
 
-	int* temporaryArray = new int[m_size];
+	Array temp(newSize, 0);
+
 	Iterator temporaryIt = otherTwo;
 
 	for (int i = 0, j = 0; i < m_size; i++, j++) {
 
 		if (i < other.m_pos || i > otherTwo.m_pos) {
-			temporaryArray[j] = m_array[i];
+			temp.m_array[j] = m_array[i];
 		}
 
 		else if (i == other.m_pos) {
@@ -506,18 +552,15 @@ Array::Iterator Array::erase(const Iterator& other, const Iterator& otherTwo)
 		}
 	}
 
-	int newSize = m_size - (otherTwo.m_pos - other.m_pos + 1);
-
-	std::swap(m_array, temporaryArray);
-	std::swap(m_size, newSize);
+	swap(temp);
 
 	temporaryIt++;
 
 	return temporaryIt;
-
 }
 
-void Array::resize(int size) {
+template<typename Type>
+void Array<Type>::resize(int size) {
 	if (size < 0) {
 		std::cerr << "ArraY::resize: size is negative, invert... \n";
 		size = -size;
@@ -533,7 +576,8 @@ void Array::resize(int size) {
 	res.swap(*this);
 }
 
-std::ostream& operator<<(std::ostream& stream, const Array& arr)
+template<typename Type>
+std::ostream& operator<<(std::ostream& stream, const Array<Type>& arr)
 {
 	stream << '[';
 	for (int i = 0; i < arr.getSize() - 1; ++i) {
@@ -543,7 +587,9 @@ std::ostream& operator<<(std::ostream& stream, const Array& arr)
 
 	return stream;
 }
-std::istream& operator>>(std::istream& stream, Array& arr)
+
+template<typename Type>
+std::istream& operator>>(std::istream& stream, Array<Type>& arr)
 {
 	for (int i = 0; i < arr.getSize(); ++i) {
 		std::cout << "[" << i << "] = ";
