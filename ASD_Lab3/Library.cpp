@@ -1,7 +1,8 @@
 #include <iostream>
 #include <vector>
+#include <string>
 #include <assert.h>
-#include <cmath>
+#include <time.h>
 #include <fstream>
 #include <random>
 
@@ -50,7 +51,6 @@ void stepsPapernovStasevich(std::vector<int>& numbers) // 2^k + 1 prefixed with 
 	step = step / 2 + 1;
 
 	for (; step >= 3; step = step / 2 + 1) {
-		std::cout << "step = " << step << std::endl;
 		sorting(numbers, step);
 	}
 
@@ -105,17 +105,23 @@ void createFile(std::vector<int>& numbers, const std::string nameFile) {
 	fclose(f);
 }
 
-std::string getNameSorting(const int count) {
+std::string getNameSorting(const int count, const int size, const int range) {
+
+	std::string nameFile = "Numbers_Size";
+	nameFile += std::to_string(size);
+	nameFile += "_Range";
+	nameFile += std::to_string(range);
+
 
 	switch (count) {
 	case(1):
-		return "Steps Shell";
+		return (nameFile += "_Steps Shell.txt");
 		break;
 	case(2):
-		return "Steps Papernov & Stasevich";
+		return (nameFile += "_Steps Papernov & Stasevich.txt");
 		break;
 	case(3):
-		return "Steps Hibbard";
+		return (nameFile += "_Steps Hibbard.txt");
 		break;
 	default:
 		assert(false);
@@ -123,6 +129,35 @@ std::string getNameSorting(const int count) {
 	}
 
 }
+
+void sortingThreeSteps(std::vector<int>& numbers, int rangeNumbers ,int count) {
+
+	std::vector<int> copy;
+	copy = numbers;
+
+
+	std::cout << "Sorting -> " << getNameSorting(count, numbers.size(),rangeNumbers) << std::endl;
+	switch (count) {
+	case(1):
+		createFile(copy, getNameSorting(count, numbers.size(), rangeNumbers));
+		stepsShell(copy);
+		break;
+	case(2):
+		createFile(copy, getNameSorting(count, numbers.size(), rangeNumbers));
+		stepsPapernovStasevich(copy);
+		break;
+	case(3):
+		createFile(copy, getNameSorting(count, numbers.size(), rangeNumbers));
+		stepsHibbard(copy);
+		break;
+	default:
+		assert(false);
+		break;
+	}
+
+	assert(isSorted(copy));
+
+	}
 
 
 
