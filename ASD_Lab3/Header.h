@@ -9,6 +9,9 @@ void stepsShell(std::vector<int>& numbers);
 void stepsPapernovStasevich(std::vector<int>& numbers);
 void stepsHibbard(std::vector<int>& numbers);
 
+void createFile(std::vector<int>& numbers, const std::string nameFile);
+std::string getNameSorting(const int count);
+
 
 
 
