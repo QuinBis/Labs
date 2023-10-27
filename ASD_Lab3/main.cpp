@@ -45,6 +45,7 @@ int main() {
 					start = clock();
 					sortingThreeSteps(copy, rangeNumbers, i);
 					end = clock();
+					assert(isSorted(copy));
 					fullTimeSorting += double(end - start) / CLOCKS_PER_SEC;
 				}
 				std::cout << getNameSorting(sizeNumbers, rangeNumbers);
