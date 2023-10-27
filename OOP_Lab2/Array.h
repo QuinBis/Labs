@@ -1,3 +1,4 @@
+#pragma once
 
 template <typename Type>
 class Array {
@@ -8,7 +9,7 @@ public:
 	using ConstIterator = TemplateIterator<const Type, const Array>;
 
 public:
-	Array(const int size = 10, const Type& value = Type());		
+	Array(const int size = 1, const Type& value = Type());		
 	Array(const Type* array, const int size);							
 	Array(const Type& other);										
 	~Array();														

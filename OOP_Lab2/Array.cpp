@@ -1,7 +1,6 @@
 ﻿#include <iostream>
-#include <assert.h>
-#include <algorithm>
-#include <time.h>
+#include <cassert>
+#include <ctime>
 
 #include "Array.h"
 
