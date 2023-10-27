@@ -76,22 +76,17 @@ void sorting(std::vector<int>& numbers, const int step)
 	int j;
 
 	for (int i = 0; i < numbers.size() - step; i++) {
-
 		j = i;
-
 		while (j >= 0 && numbers[j] > numbers[j + step]) {
-
 			std::swap(numbers[j], numbers[j + step]);
-
 			j -= step;
-
 		}
 	}
 }
 
 void createFile(std::vector<int>& numbers, const std::string nameFile) {
 	
-	char* name = new char[nameFile.length()];
+	char* name = new char[nameFile.length() + 1];
 	std::strcpy(name, nameFile.c_str());
 
 	FILE* f = fopen(name, "w");
@@ -101,67 +96,44 @@ void createFile(std::vector<int>& numbers, const std::string nameFile) {
 	for (auto it = numbers.begin(); it != numbers.end(); it++) {
 		fprintf(f, "%d ", *it);
 	}
-
+	delete[] name;
 	fclose(f);
 }
 
-std::string getNameSorting(const int count, const int size, const int range) {
+std::string getNameSorting(int size, const int range)
+{
 
 	std::string nameFile = "Numbers_Size";
-	nameFile += std::to_string(size);
-	nameFile += "_Range";
-	nameFile += std::to_string(range);
 
+	nameFile += std::to_string(size) + "_Range";
 
-	switch (count) {
-	case(1):
-		return (nameFile += "_Steps Shell.txt");
-		break;
-	case(2):
-		return (nameFile += "_Steps Papernov & Stasevich.txt");
-		break;
-	case(3):
-		return (nameFile += "_Steps Hibbard.txt");
-		break;
-	default:
-		assert(false);
-		break;
-	}
+	nameFile += std::to_string(range) + ".txt";
 
+	return nameFile;
 }
 
 void sortingThreeSteps(std::vector<int>& numbers, int rangeNumbers ,int count) {
 
-	std::vector<int> copy;
-	copy = numbers;
+	std::cout << "Sorting -> " << getNameSorting(numbers.size(), rangeNumbers) << std::endl;
 
-
-	std::cout << "Sorting -> " << getNameSorting(count, numbers.size(),rangeNumbers) << std::endl;
 	switch (count) {
 	case(1):
-		createFile(copy, getNameSorting(count, numbers.size(), rangeNumbers));
-		stepsShell(copy);
+		stepsShell(numbers);
 		break;
 	case(2):
-		createFile(copy, getNameSorting(count, numbers.size(), rangeNumbers));
-		stepsPapernovStasevich(copy);
+		stepsPapernovStasevich(numbers);
 		break;
 	case(3):
-		createFile(copy, getNameSorting(count, numbers.size(), rangeNumbers));
-		stepsHibbard(copy);
+		stepsHibbard(numbers);
 		break;
 	default:
 		assert(false);
 		break;
 	}
 
-	assert(isSorted(copy));
+	assert(isSorted(numbers));
 
 	}
-
-
-
-
 
 
 void outputnum(std::vector<int> numbers) {
