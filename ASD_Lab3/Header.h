@@ -11,7 +11,7 @@ void stepsHibbard(std::vector<int>& numbers);
 
 void createFile(std::vector<int>& numbers, const std::string nameFile);
 void sortingThreeSteps(std::vector<int>& numbers, int rangeNumbers, int count);
-std::string getNameSorting(const int count, const int size, const int range);
+std::string getNameSorting(const int size, const int range);
 
 
 
