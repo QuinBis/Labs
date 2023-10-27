@@ -2,8 +2,11 @@
 #include <vector>
 #include <assert.h>
 #include <random>
+#include <string>
 
 #include "Header.h"
+
+#define _CRT_SECURE_NO_WARNINGS
 
 bool isSorted(const std::vector<int> numbers)
 {
@@ -39,9 +42,8 @@ void setRandomNumbers(std::vector<int>& numbers, int size, int min, int max)
 
 }
 
-void sifting(std::vector<int>& numbers, int index)
+void sifting(std::vector<int>& numbers, const int size, int index)
 {
-    unsigned int size = numbers.size();
 
     int childs = 2 * index + 1;
 
@@ -50,19 +52,17 @@ void sifting(std::vector<int>& numbers, int index)
         if (childs < size) {
 
             // the next child exists.
-            if ((childs + 1) < size) {
+            if ((childs + 1) < size)
 
-                if (numbers[childs] < numbers[childs + 1]) {
+                if (numbers[childs + 1] > numbers[childs])
                     // It becomes current
                     childs += 1;
-                }
 
-                // We change places for parents with a large descendant
-                if (numbers[index] < numbers[childs]) {
-                    std::swap(numbers[index], numbers[childs]);
-                    index = childs;
-                    childs = 2 * index + 1;
-                }
+            // We change places for parents with a large descendant
+            if (numbers[index] < numbers[childs]) {
+                std::swap(numbers[index], numbers[childs]);
+                index = childs;
+                childs = 2 * index + 1;
             }
 
             // There is no next child
@@ -71,19 +71,60 @@ void sifting(std::vector<int>& numbers, int index)
             }
         }
 
-        else { // end while
+        // end while
+        else {
             index += size;
         }
     }
 }
 
-void heapsort(std::vector<int>& numbers) {
+void heapSort(std::vector<int>& numbers) {
 
-    unsigned int size = numbers.size();
+    const int size = (int)numbers.size();
 
     // i = size/2-1    ---> We take the last one to the parents.
     for (int i = size / 2 - 1; i >= 0; i--) {
-        sifting(numbers, i);
+        sifting(numbers,size, i);
+    }
+
+    for (int j = size - 1; j > 0; j--) {
+        std::swap(numbers[0], numbers[j]);
+        sifting(numbers, j);
+
     }
 
 }
+
+std::string getNameSorting(int size, const int range)
+{
+
+    std::string nameFile = "Numbers_Size";
+
+    nameFile += std::to_string(size) + "_Range";
+
+    nameFile += std::to_string(range) + ".txt";
+
+    return nameFile;
+}
+
+void readFile(std::vector<int>& numbers, const std::string nameFile) {
+
+    char* name = new char[nameFile.length() + 1];
+    std::strcpy(name, nameFile.c_str());
+
+    FILE* f = fopen(name, "r");
+
+    assert(f != NULL);
+
+    {
+        int i;
+        while (fscanf(f, "%d", &i) != EOF) {
+            numbers.push_back(i);
+        }
+    }
+
+
+    delete[] name;
+    fclose(f);
+}
+
