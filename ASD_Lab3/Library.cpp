@@ -135,6 +135,27 @@ void sortingThreeSteps(std::vector<int>& numbers, int rangeNumbers ,int count) {
 
 	}
 
+void readFile(std::vector<int>& numbers, const std::string nameFile) {
+
+	char* name = new char[nameFile.length() + 1];
+	std::strcpy(name, nameFile.c_str());
+
+	FILE* f = fopen(name, "r");
+
+	assert(f != NULL);
+
+	{
+		int i;
+		while (fscanf(f, "%d", &i) != EOF) {
+			numbers.push_back(i);
+		}
+	}
+
+
+	delete[] name;
+	fclose(f);
+}
+
 
 void outputnum(std::vector<int> numbers) {
 	std::cout << "[ ";

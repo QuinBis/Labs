@@ -35,13 +35,14 @@ int main() {
 
 			std::cout << "Size : " << sizeNumbers << " Range : " << rangeNumbers << std::endl;
 
-			setRandomNumbers(numbers, sizeNumbers, -rangeNumbers, rangeNumbers);
-			createFile(numbers, getNameSorting(sizeNumbers, rangeNumbers));
-			copy = numbers;
+			//setRandomNumbers(numbers, sizeNumbers, -rangeNumbers, rangeNumbers);
+			//createFile(numbers, getNameSorting(sizeNumbers, rangeNumbers));
+			readFile(numbers, getNameSorting(sizeNumbers, rangeNumbers));
 
 			for (int i = 1; i <= 3; i++) {
 				std::cout << getSteps(i) << std::endl;
 				for (int count = 1; count <= 3; count++) {
+					copy = numbers;
 					start = clock();
 					sortingThreeSteps(copy, rangeNumbers, i);
 					end = clock();
