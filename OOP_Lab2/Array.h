@@ -9,14 +9,14 @@ public:
 	using ConstIterator = TemplateIterator<const Type, const Array>;
 
 public:
-	Array(const int size = 1, const Type& value = Type());		
-	Array(const Type* array, const int size);							
+	Array(int size = 1, const Type& value = Type());
+	Array(const Type* array, int size);							
 	Array(const Type& other);										
 	~Array();														
 
 	int getSize() const;											
 
-	void swap(Array& other);											
+	void swapArrays(Array& other);											
 
 	int getIndex(const Type& value) const;							
 
@@ -50,15 +50,18 @@ public:
 	Array& operator += (const Type& value);								
 
 	Iterator begin();												
-	Iterator end();												
+	Iterator end();
 
-	Iterator insert(const Iterator other, const Type& value);
+	ConstIterator begin() const;
+	ConstIterator end() const;
+
+	Iterator insert(Iterator other, const Type& value);
 	Iterator erase(const Iterator other, const Iterator otherTwo);
 
 	void resize(int size);
 
 private:
-	int* m_array = nullptr;
+	Type* m_array = nullptr;
 	int m_size = 0;
 };
 
@@ -95,3 +98,5 @@ std::ostream& operator<<(std::ostream& stream, const Array<Type>& arr);
 
 template<typename Type>
 std::istream& operator>>(std::istream& stream, Array<Type>& arr);
+
+#include "Array.cpp"

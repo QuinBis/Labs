@@ -1,18 +1,13 @@
 #include <iostream>
-#include <string>
 
 #include "Array.h"
 
-
 int main() {
 
-	char  s[5] = "qwer";
-	
-	Array<std::string> test(9, s);
+	char test[21] = "hello world!";
 
-	std::cout << test << std::endl;
+	Array<std::string> temp(101,test);
 
+	std::cout << temp << std::endl;
 
-
-	return 0;
 }
