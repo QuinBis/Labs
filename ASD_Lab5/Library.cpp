@@ -74,3 +74,39 @@ void readFile(std::vector<int>& numbers, const std::string nameFile) {
 	delete[] name;
 	fclose(f);
 }
+
+void swapNumbers(int& x, int& y)
+{
+	int value = x;
+	x = y;
+	y = value;
+}
+
+void quickSort(std::vector<int>& numbers, int leftBorder, int rightBorder)
+{
+	if (leftBorder > rightBorder) return;
+
+	const int size = (int)numbers.size();
+
+	int left = leftBorder,
+		right = rightBorder,
+		middleElement = numbers[(left + right) / 2];
+
+	while (left <= right) {
+
+		while (numbers[left] < middleElement) left++;
+		while (numbers[right] > middleElement) right--;
+
+		if (left <= right) {
+
+			swapNumbers(numbers[left], numbers[right]);
+			left++; right--;
+
+		}
+	}
+
+	quickSort(numbers, leftBorder, right);
+	quickSort(numbers, left, rightBorder);
+
+
+}
