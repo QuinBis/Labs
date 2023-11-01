@@ -131,9 +131,7 @@ void sortingThreeSteps(std::vector<int>& numbers, int rangeNumbers ,int count) {
 		break;
 	}
 
-	assert(isSorted(numbers));
-
-	}
+}
 
 void readFile(std::vector<int>& numbers, const std::string nameFile) {
 

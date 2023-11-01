@@ -43,9 +43,11 @@ int main() {
 				std::cout << getSteps(i) << std::endl;
 				for (int count = 1; count <= 3; count++) {
 					copy = numbers;
+
 					start = clock();
 					sortingThreeSteps(copy, rangeNumbers, i);
 					end = clock();
+
 					assert(isSorted(copy));
 					fullTimeSorting += double(end - start) / CLOCKS_PER_SEC;
 				}
