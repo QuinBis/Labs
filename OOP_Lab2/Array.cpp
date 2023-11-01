@@ -23,10 +23,8 @@ Array<Type>::Array(const int size, const Type& value)
 
 
 	m_array = new Type[m_size];
-
-	for (int i = 0; i < m_size; i++) {
+	for (int i = 0; i < m_size; i++)
 		m_array[i] = value;
-	}
 
 }
 
@@ -38,8 +36,7 @@ Array<Type>::Array(const Type* array, const int size)
 
 	if (size < 0) {
 		size = -size;
-		std::cerr << "void Array::Array(const int*, int size): размер не может быть отрицательным. Убран минус." << std::endl;
-		std::cout << size << std::endl;
+		std::cerr << "void Array::Array(const int*, int size): size is negative, invert." << std::endl;
 	}
 
 	m_size = size;
@@ -148,27 +145,24 @@ bool Array<Type>::insert(const int index, const Type& value)
 		return false;	
 	}
 
-	int* temporaryArray = new int[m_size + 1];
+	Type* temporary = new Type[m_size + 1];
 
 	for (int i = 0, j = 0; i < m_size + 1; i++, j++) {
-
 		if (i != index) {
-			temporaryArray[i] = m_array[j];
+			temporary[i] = m_array[j];
 		}
-
 		else {
-			temporaryArray[i] = value;
+			temporary[i] = value;
 			j--;
 		}
-
 	}
 
 	delete[] m_array;
 
 	m_size++;
-	m_array = temporaryArray;
-
+	m_array = temporary;
 	return true;
+
 }
 
 template<typename Type>
@@ -180,26 +174,26 @@ bool Array<Type>::erase(const int index)
 		return false;
 	}
 
-	int* temporaryArray = new int[m_size - 1];
+	Type* temporary = new Type[m_size - 1];
 
-	for (int i = 0, j = 0; j < m_size - 1;) {
-
+	int i = 0, j = 0;
+	while (i < m_size) {
 		if (i != index) {
-			temporaryArray[j] = m_array[i];
-			i++; j++;
+			temporary[j] = m_array[i];
+			i++;
+			j++;
 		}
 		else {
 			i++;
 		}
-
 	}
 
 	delete[] m_array;
 
 	m_size--;
-	m_array = temporaryArray;
-
+	m_array = temporary;
 	return true;
+
 }
 
 template<typename Type>
@@ -222,7 +216,7 @@ template<typename Type>
 bool Array<Type>::eraseAll(const Type& value)
 {
 
-	int* temporaryArray = new Type [m_size];
+	Type* temporaryArray = new Type [m_size];
 
 	int newSize = 0;
 
@@ -253,7 +247,7 @@ Type Array<Type>::getMaxValue() const
 
 	assert(m_size > 0);
 
-	int temp = m_array[0];
+	Type temp = m_array[0];
 
 	for (int i = 0; i < m_size; i++) {
 
@@ -275,7 +269,7 @@ Type Array<Type>::getMinValue() const
 	assert(m_size > 0);
 
 
-	int temp = m_array[0];
+	Type temp = m_array[0];
 
 	for (int i = 0; i < m_size; i++) {
 
