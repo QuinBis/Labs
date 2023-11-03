@@ -5,6 +5,12 @@
 #include "Header.h"
 
 int main() {
-	std::cout << "Hello sort!" << std::endl;
+	
+	std::vector<int> numbers;
+	setRandomNumbers(numbers, 10, 1, 10);
+
+	outputnum(numbers);
+
+
 	return 0;
 }
