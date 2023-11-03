@@ -84,7 +84,7 @@ void swapNumbers(int& x, int& y)
 
 void quickSort(std::vector<int>& numbers, int leftBorder, int rightBorder)
 {
-	if (leftBorder > rightBorder) return;
+	if (leftBorder >= rightBorder) return;
 
 	const int size = (int)numbers.size();
 
