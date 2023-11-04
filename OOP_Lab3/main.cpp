@@ -2,17 +2,13 @@
 
 #include "BoolVector.h"
 
-int main() {
+int main()
+{
+	BoolVector temporary = "1111000011110000";
 
+	temporary.invert();
 
-	uint8_t MyVariable = 100;
-
-	std::cout << (int)MyVariable << std::endl;
-
-
-
-
-
+	std::cout << temporary << std::endl;
 
 	return 0;
 }
