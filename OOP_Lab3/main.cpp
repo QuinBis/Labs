@@ -4,7 +4,15 @@
 
 int main() {
 
-	std::cout << "Hello BoolVector!" << std::endl;
+
+	uint8_t MyVariable = 100;
+
+	std::cout << (int)MyVariable << std::endl;
+
+
+
+
+
 
 	return 0;
 }
